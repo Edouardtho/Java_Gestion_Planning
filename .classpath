@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="src/lib/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="src/lib/dom4j-1.6.jar"/>
+	<classpathentry kind="lib" path="src/lib/hibernate-commons-annotations-4.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="src/lib/hibernate-core-4.2.0.final.jar"/>
+	<classpathentry kind="lib" path="src/lib/hibernate-entitymanager-4.2.2.final.jar"/>
+	<classpathentry kind="lib" path="src/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="src/lib/hibernate-validator-4.3.0.final.jar"/>
+	<classpathentry kind="lib" path="src/lib/javassist-3.15.0.GA.jar"/>
+	<classpathentry kind="lib" path="src/lib/jboss-logging-3.1.2.GA.jar"/>
+	<classpathentry kind="lib" path="src/lib/jboss-logmanager-1.4.0.final.jar"/>
+	<classpathentry kind="lib" path="src/lib/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="src/lib/log4j-jboss-logmanager-1.0.1.final.jar"/>
+	<classpathentry kind="lib" path="src/lib/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
+	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
+	<classpathentry kind="lib" path="src/lib/sqljdbc42.jar"/>
+	<classpathentry kind="var" path="M2_REPO"/>
+	<classpathentry kind="lib" path="src/lib/mysql-connector-java-5.1.41-bin.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

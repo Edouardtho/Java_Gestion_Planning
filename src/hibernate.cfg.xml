@@ -1,0 +1,25 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+<session-factory>
+<property name="connection.url">jdbc:mysql://localhost:80/planning</property> <!-- BD Mane -->
+<property name="connection.driver_class">com.mysql.jdbc.Driver</property> <!-- DB Driver -->
+<property name="connection.username">root</property> <!-- DB User -->
+<property name="connection.password"></property> <!-- DB Password -->
+<property name="dialect">org.hibernate.dialect.MySQLDialect</property> <!-- DB Dialect -->
+<!-- Enable Hibernate's automatic session context management -->
+<property name="current_session_context_class">thread</property>
+<!-- Disable the second-level cache  -->
+<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+<property name="connection_pool_size">1</property>
+<property name="hbm2ddl.auto">update</property>
+<property name="show_sql">true</property>
+
+<mapping class ="entite.classe"/>
+<mapping class ="entite.matiere"/>
+<mapping class ="entite.professeur"/>
+<mapping class ="entite.salle"/>
+
+</session-factory> 
+</hibernate-configuration>
