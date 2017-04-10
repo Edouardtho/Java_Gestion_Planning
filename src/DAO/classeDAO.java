@@ -19,9 +19,9 @@ public class classeDAO {
         			+ "VALUES ('"+newClasse.getNomClasse()+"','"+newClasse.getNombreEleves() + "');" ;
         
         Statement smt = access.createStatement() ;
-        ResultSet rs = smt.executeQuery(sql) ;
+        boolean rs = smt.execute(sql) ;
         
-        if (rs.next())
+        if (rs)
         	return true;
         else
         	return false;

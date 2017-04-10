@@ -34,7 +34,7 @@ public class ajouterClasse extends JFrame {
 	 */
 	public ajouterClasse() {
 		setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 356, 238);
+		setBounds(100, 100, 377, 238);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -58,9 +58,10 @@ public class ajouterClasse extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				classe newClasse = new classe(nomClassText.getText(), Integer.parseInt(nbrEleveText.getText()));
 				
-				Boolean realiser;
 				try {
-					realiser = classeBLL.saveClasse(newClasse);
+					Boolean realiser = classeBLL.saveClasse(newClasse);
+					
+					System.out.println(realiser);
 				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -69,26 +70,32 @@ public class ajouterClasse extends JFrame {
 		});
 		
 		JButton btnAnnuler = new JButton("Annuler");
+		btnAnnuler.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblNomClasse)
 								.addComponent(lblNombreEleves))
-							.addPreferredGap(ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(nbrEleveText, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
 								.addComponent(nomClassText, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(lblAjoutClasse, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+						.addComponent(lblAjoutClasse, GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(79)
+							.addContainerGap()
 							.addComponent(btnAjouter)
-							.addGap(34)
-							.addComponent(btnAnnuler)))
+							.addGap(18)
+							.addComponent(btnAnnuler)
+							.addGap(28)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -96,17 +103,19 @@ public class ajouterClasse extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addComponent(lblAjoutClasse)
 					.addGap(34)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(nomClassText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNomClasse))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(nbrEleveText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNombreEleves))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblNomClasse)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblNombreEleves))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(nomClassText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(nbrEleveText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addGap(35)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnAjouter)
-						.addComponent(btnAnnuler))
+						.addComponent(btnAnnuler)
+						.addComponent(btnAjouter))
 					.addGap(20))
 		);
 		contentPane.setLayout(gl_contentPane);

@@ -3,7 +3,7 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 <session-factory>
-<property name="connection.url">jdbc:mysql://localhost:80/planning</property> <!-- BD Mane -->
+<property name="connection.url">jdbc:mysql://localhost:3306/planning</property> <!-- BD Mane -->
 <property name="connection.driver_class">com.mysql.jdbc.Driver</property> <!-- DB Driver -->
 <property name="connection.username">root</property> <!-- DB User -->
 <property name="connection.password"></property> <!-- DB Password -->
