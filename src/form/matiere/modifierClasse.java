@@ -1,4 +1,4 @@
-package form.classes;
+package form.matiere;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
