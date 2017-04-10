@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -74,8 +75,14 @@ public class menu extends JFrame {
 		JButton btnModifierClasses = new JButton("Modifier");
 		btnModifierClasses.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				modifierClasse modifClasse = new modifierClasse();
-				modifClasse.setVisible(true);
+				modifierClasse modifClasse;
+				try {
+					modifClasse = new modifierClasse();
+					modifClasse.setVisible(true);
+				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
@@ -112,7 +119,7 @@ public class menu extends JFrame {
 		JButton btnModifierMatieres = new JButton("Modifier");
 		btnModifierMatieres.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				modifierClasse modifMatiere = new modifierClasse();
+				modifierMatiere modifMatiere = new modifierMatiere();
 				modifMatiere.setVisible(true);
 			}
 		});
