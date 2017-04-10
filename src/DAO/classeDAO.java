@@ -1,5 +1,6 @@
 package DAO;
 
+import hibernate.DBConnection;
 import hibernate.basedonnees;
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class classeDAO {
 	static basedonnees seconnecter = new basedonnees();
 	
 	public static Boolean saveClasse(classe newClasse) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
-		Connection access = seconnecter.connexion();
+		Connection access = DBConnection.getInstance();
 		
 		 // Envoi d’un requête générique
         String sql 	= "INSERT INTO classe (nomClasse, nombreEleves)"
@@ -27,7 +28,7 @@ public class classeDAO {
 	}
 	
 	public static Boolean updateClasse(classe majClasse) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
-		Connection access = seconnecter.connexion();
+		Connection access = DBConnection.getInstance();
 		
 		 // Envoi d’un requête générique
         String sql 	= "UPDATE classe (nomClasse, nombreEleves)"
@@ -45,7 +46,7 @@ public class classeDAO {
 	}
 	
 	public static Boolean deleteClasse(classe suprClasse) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
-		Connection access = seconnecter.connexion();
+		Connection access = DBConnection.getInstance();
 		
 		 // Envoi d’un requête générique
         String sql 	= "DELETE FROM classe "
@@ -61,7 +62,7 @@ public class classeDAO {
 	}
 	
 	public static List<classe> listeClasse() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
-		Connection access = seconnecter.connexion();
+		Connection access = DBConnection.getInstance();
 		
 		List<classe> list =  new ArrayList<classe>();
 		

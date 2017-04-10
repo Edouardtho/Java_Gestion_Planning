@@ -1,22 +1,17 @@
 package BLL;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import DAO.classeDAO;
 import entite.classe;
 
 public class classeBLL {
-	public Boolean saveClasse(classe newClasse){
-		try{
-			return classeDAO.saveClasse(newClasse);
-		}
-		catch(Exception e)
-		{
-			return null;
-		}
+	public static Boolean saveClasse(classe newClasse) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
+		return classeDAO.saveClasse(newClasse);
 	}
 	
-	public Boolean updateClasse(classe majClasse){		
+	public static Boolean updateClasse(classe majClasse){		
 		try{
 			return classeDAO.updateClasse(majClasse);
 		}
@@ -26,7 +21,7 @@ public class classeBLL {
 		}
 	}
 	
-	public Boolean deleteClasse(classe suprClasse){
+	public static Boolean deleteClasse(classe suprClasse){
 		try{
 			return classeDAO.deleteClasse(suprClasse);
 		}
@@ -36,7 +31,7 @@ public class classeBLL {
 		}
 	}
 	
-	public List<classe> listeClasse(){
+	public static List<classe> listeClasse(){
 		try{
 			return classeDAO.listeClasse();
 		}

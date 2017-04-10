@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.sql.Connection;
 
 public class DBConnection {
-	private static String url = "jdbc:mysql://locahost/planning";
+	private static String url = "jdbc:mysql://127.0.0.1/planning";
 	private static String user = "root";
 	private static String password = "";
 	private static java.sql.Connection connect;

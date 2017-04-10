@@ -6,7 +6,11 @@ public class classe {
 	private String nomClasse;
 	private int nombreEleves;
 	
-	// Constructeur
+	// Constructeurs
+	public classe(String nomClasse, int nombreEleves){
+		this.nomClasse = nomClasse;
+		this.nombreEleves = nombreEleves;
+	}
 	public classe(int idClasse, String nomClasse, int nombreEleves){
 		this.idClasse = idClasse;
 		this.nomClasse = nomClasse;
