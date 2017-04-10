@@ -20,11 +20,7 @@ import javax.swing.border.EmptyBorder;
 import BLL.*;
 import entite.*;
 import form.classes.*;
-import form.matiere.ajouterClasse;
-import form.matiere.listeClasses;
-import form.matiere.modifierClasse;
-import form.matiere.suprimerClasse;
-import form.matières.*;
+import form.matieres.*;
 import form.professeurs.*;
 import form.salles.*;
 
