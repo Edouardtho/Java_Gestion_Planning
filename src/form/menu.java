@@ -82,6 +82,8 @@ public class menu extends JFrame {
 				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} finally {
+					
 				}
 			}
 		});

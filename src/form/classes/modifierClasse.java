@@ -1,8 +1,5 @@
 package form.classes;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -13,6 +10,8 @@ import entite.classe;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
@@ -30,6 +29,7 @@ public class modifierClasse extends JFrame {
 	private JPanel contentPane;
 	private JTextField nomClassText;
 	private JTextField nbrEleveText;
+	private JOptionPane avertissement;
 	
 	private List<classe> listeClasse;
 	
@@ -40,7 +40,7 @@ public class modifierClasse extends JFrame {
 	 * @throws InstantiationException 
 	 * @throws ClassNotFoundException 
 	 */
-	@SuppressWarnings({ "static-access", "rawtypes" })
+	@SuppressWarnings({ "static-access", "rawtypes", "unchecked" })
 	public modifierClasse() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
 		setTitle("Modif Classe");
 		setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
@@ -54,9 +54,18 @@ public class modifierClasse extends JFrame {
 		lblModifClasse.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		
 		JComboBox cmbxClasse = new JComboBox();
-		cmbxClasse.setToolTipText("S\u00E9lectionner une classe \u00E0 modifier");
+		cmbxClasse.setToolTipText("");
 		
+		try {
 		listeClasse = classeBLL.listeClasse();
+		}
+		catch (Exception e){
+			// Boîte du message préventif
+			avertissement = new JOptionPane();
+			avertissement.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+		}
+		
+		cmbxClasse.addItem("Sélectionnez une classe");
 		
 		for(classe uneClasse:listeClasse){
 			cmbxClasse.addItem(uneClasse.getNomClasse());
