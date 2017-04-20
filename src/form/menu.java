@@ -2,38 +2,36 @@ package form;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JTabbedPane;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BLL.classeBLL;
 import BLL.matiereBLL;
 import BLL.personneBLL;
-import entite.*;
 import form.classes.*;
 import form.matieres.*;
+import entite.*;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTabbedPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Color;
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class menu extends JFrame {
@@ -97,25 +95,19 @@ public class menu extends JFrame {
 		lblPlanning.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPlanning.setFont(new Font("Tempus Sans ITC", Font.ITALIC, 29));
 		lblPlanning.setForeground(new Color(255, 255, 255));
-		
-		JLabel lblNewLabel = new JLabel("New label");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblPlanning, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 498, Short.MAX_VALUE)
-					.addComponent(lblNewLabel)
-					.addGap(181))
+					.addContainerGap(725, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblPlanning, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap()
+					.addComponent(lblPlanning)
 					.addContainerGap())
 		);
 		panel.setLayout(gl_panel);
@@ -280,7 +272,7 @@ public class menu extends JFrame {
 		modules.addTab("Professeurs", null, panelProf, null);
 		
 		tableauPersonnes= new JTable(model);
-		JScrollPane scrollPaneProfs = new JScrollPane(tableauPersonnes);
+		JScrollPane scrollPanePersonnes = new JScrollPane(tableauPersonnes);
 		
 		try {
 			lesColonnes = classeBLL.nomColonnes("personne");
@@ -314,7 +306,7 @@ public class menu extends JFrame {
 				.addGroup(gl_panelProf.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panelProf.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPaneProfs, GroupLayout.PREFERRED_SIZE, 859, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPanePersonnes, GroupLayout.PREFERRED_SIZE, 859, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panelProf.createSequentialGroup()
 							.addComponent(btnAjouterProf, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
 							.addGap(6)
@@ -327,7 +319,7 @@ public class menu extends JFrame {
 			gl_panelProf.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelProf.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrollPaneProfs, GroupLayout.PREFERRED_SIZE, 363, GroupLayout.PREFERRED_SIZE)
+					.addComponent(scrollPanePersonnes, GroupLayout.PREFERRED_SIZE, 363, GroupLayout.PREFERRED_SIZE)
 					.addGap(6)
 					.addGroup(gl_panelProf.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnAjouterProf, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
