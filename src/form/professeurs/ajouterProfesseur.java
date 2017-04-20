@@ -1,19 +1,10 @@
 package form.professeurs;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.Color;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 public class ajouterProfesseur extends JFrame {
 
@@ -49,7 +40,7 @@ public class ajouterProfesseur extends JFrame {
 		emailProfText = new JTextField();
 		emailProfText.setColumns(10);
 		
-		JLabel lblPrnomDuProf = new JLabel("Pr\u00E9nom du prof :");
+		JLabel lblPrnomDuProf = new JLabel("Prénom du prof :");
 		
 		JLabel lblEmailDuProf = new JLabel("Email du prof :");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);

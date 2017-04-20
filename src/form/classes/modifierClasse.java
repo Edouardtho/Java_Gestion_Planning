@@ -1,26 +1,16 @@
 package form.classes;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
 import BLL.classeBLL;
 import entite.classe;
 import form.menu;
 
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import java.awt.event.ActionListener;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -58,11 +48,11 @@ public class modifierClasse extends JFrame {
 			listeClasse = classeBLL.listeClasses();
 		}
 		catch (Exception e){
-			// Boîte du message préventif
-			JOptionPane.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+			// Boite du message prÃ©ventif
+			JOptionPane.showMessageDialog(null, "Erreur de connection Ã  la base de donnÃ©es !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
 		}
 		
-		cmbxClasse.addItem("Sélectionnez une classe");
+		cmbxClasse.addItem("SÃ©lectionnez une classe");
 		
 		for(classe uneClasse:listeClasse){
 			cmbxClasse.addItem(uneClasse.getNomClasse());
@@ -86,7 +76,7 @@ public class modifierClasse extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// Si les champs du formulaire ne sont pas vides, on insert la nouvelle classe en base
 				if (!nomClassText.getText().isEmpty() && !nbrElevesText.getText().isEmpty() && hibernate.fonctions.isInt(nbrElevesText.getText())){
-					// Création de la classe à partir du formulaire
+					// CrÃ©ation de la classe Ã  partir du formulaire
 					classe newClasse = new classe(listeClasse.get(cmbxClasse.getSelectedIndex()-1).getIdClasse(), nomClassText.getText(), Integer.parseInt(nbrElevesText.getText()));
 					
 					// On essaie de sauvegarder la classe
@@ -94,38 +84,38 @@ public class modifierClasse extends JFrame {
 						int realiser = classeBLL.updateClasse(newClasse);
 						
 						if (realiser == 1){
-							// Boîte du message préventif
-							JOptionPane.showMessageDialog(null, "La classe a bien été modifiée.", "Valider", JOptionPane.INFORMATION_MESSAGE);
+							// Boite du message prÃ©ventif
+							JOptionPane.showMessageDialog(null, "La classe a bien Ã©tÃ© modifiÃ©e.", "Valider", JOptionPane.INFORMATION_MESSAGE);
 							
 							menu eMenu = new menu();
 							eMenu.setVisible(true);
 							dispose();
 						}
 						else{
-							// Boîte du message préventif
+							// Boite du message prÃ©ventif
 							JOptionPane.showMessageDialog(null, "Une erreur s'est produite.", "Valider", JOptionPane.WARNING_MESSAGE);
 						}
 					}
-					// Et si on n'y arrive pas on gère l'erreur
+					// Et si on n'y arrive pas on gÃ¨re l'erreur
 					catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
-				else if (cmbxClasse.getSelectedItem().toString() == "Sélectionnez une classe")
+				else if (cmbxClasse.getSelectedItem().toString() == "SÃ©lectionnez une classe")
 				{
-					// Boîte du message préventif
-					JOptionPane.showMessageDialog(null, "Aucune classe n'est sélectionnée !", "Attention", JOptionPane.WARNING_MESSAGE);
+					// Boite du message prÃ©ventif
+					JOptionPane.showMessageDialog(null, "Aucune classe n'est sÃ©lectionnÃ©e !", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
-				// On avertit l'utilisateur si le nombre d'élèves n'est pas numérique
+				// On avertit l'utilisateur si le nombre d'Ã©lÃ¨ves n'est pas numÃ©rique
 				else if (!hibernate.fonctions.isInt(nbrElevesText.getText())){
-					// Boîte du message préventif
-					JOptionPane.showMessageDialog(null, "Le nombre d'élève n'est pas un nombre !", "Attention", JOptionPane.WARNING_MESSAGE);
+					// Boite du message prÃ©ventif
+					JOptionPane.showMessageDialog(null, "Le nombre d'Ã©lÃ¨ve n'est pas un nombre !", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
 				// Sinon, on avertit l'utilisateur
 				else
 				{
-					// Boîte du message préventif
+					// Boite du message prÃ©ventif
 					JOptionPane.showMessageDialog(null, "Certains champs sont vides", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
 			}

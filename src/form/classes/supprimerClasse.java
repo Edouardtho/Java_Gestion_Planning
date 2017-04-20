@@ -1,24 +1,18 @@
 package form.classes;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
 import BLL.classeBLL;
 import entite.classe;
 import form.menu;
-import hibernate.fonctions;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-
-import javax.swing.*;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
-
-import javax.swing.*;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 @SuppressWarnings({ "serial", "unused" })
 public class supprimerClasse extends JFrame {
@@ -39,19 +33,19 @@ public class supprimerClasse extends JFrame {
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		setContentPane(contentPane);
 		
-		JLabel lblNbrEleves = new JLabel("Nombre d'\u00E9l\u00E8ves :");
+		JLabel lblNbrEleves = new JLabel("Nombre d'Ã©lÃ¨ves :");
 		
 		JComboBox cmbxClasse = new JComboBox();
 		try {
 			listeClasse = classeBLL.listeClasses();
 		}
 		catch (Exception e){
-			// Boîte du message préventif
+			// Boite du message prÃ©ventif
 			avertissement = new JOptionPane();
-			avertissement.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+			avertissement.showMessageDialog(null, "Erreur de connection Ã  la base de donnÃ©es !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
 		}
 		
-		cmbxClasse.addItem("Sélectionnez une classe");
+		cmbxClasse.addItem("SÃ©lectionnez une classe");
 		
 		for(classe uneClasse:listeClasse){
 			cmbxClasse.addItem(uneClasse.getNomClasse());
@@ -75,42 +69,42 @@ public class supprimerClasse extends JFrame {
 		JButton btnSupprimer = new JButton("Supprimer");
 		btnSupprimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Boîte du message préventif
-				int rs = JOptionPane.showConfirmDialog(null, "Êtes-vous sûr de vouloir supprimer '"+listeClasse.get(cmbxClasse.getSelectedIndex()-1).getNomClasse()+"' ?", "Supression", JOptionPane.OK_CANCEL_OPTION);
+				// Boite du message prÃ©ventif
+				int rs = JOptionPane.showConfirmDialog(null, "Etes-vous sÃ»r de vouloir supprimer '"+listeClasse.get(cmbxClasse.getSelectedIndex()-1).getNomClasse()+"' ?", "Supression", JOptionPane.OK_CANCEL_OPTION);
 				
-				// Si le résultat du message est ok
+				// Si le rÃ©sultat du message est ok
 				if (rs == 0){
 					// On essaie de sauvegarder la classe
 					try {
 						Boolean realiser = classeBLL.deleteClasse(listeClasse.get(cmbxClasse.getSelectedIndex()-1).getIdClasse());
 						
 						if (realiser == false){
-							// Boîte du message préventif
-							JOptionPane.showMessageDialog(null, "La classe a bien été supprimée.", "Valider", JOptionPane.INFORMATION_MESSAGE);
+							// Boite du message prÃ©ventif
+							JOptionPane.showMessageDialog(null, "La classe a bien Ã©tÃ© supprimÃ©e.", "Valider", JOptionPane.INFORMATION_MESSAGE);
 							
 							menu eMenu = new menu();
 							eMenu.setVisible(true);
 							dispose();
 						}
 						else{
-							// Boîte du message préventif
+							// Boite du message prÃ©ventif
 							JOptionPane.showMessageDialog(null, "Une erreur s'est produite.", "Valider", JOptionPane.WARNING_MESSAGE);
 						}
 					}
-					// Et si on n'y arrive pas on gère l'erreur
+					// Et si on n'y arrive pas on gÃ¨re l'erreur
 					catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
-				// Si Aucune classe n'est sélectionnée
-				else if (cmbxClasse.getSelectedItem().toString() == "Sélectionnez une classe"){
-					// Boîte du message préventif
-					JOptionPane.showMessageDialog(null, "Aucune classe n'est sélectionnée !", "Attention", JOptionPane.WARNING_MESSAGE);
+				// Si Aucune classe n'est sÃ©lectionnÃ©e
+				else if (cmbxClasse.getSelectedItem().toString() == "SÃ©lectionnez une classe"){
+					// Boite du message prÃ©ventif
+					JOptionPane.showMessageDialog(null, "Aucune classe n'est sÃ©lectionnÃ©e !", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
 				// Si une autre erreur survient
 				else{
-					// Boîte du message préventif
+					// Boite du message prÃ©ventif
 					JOptionPane.showMessageDialog(null, "Une erreur est survenue !", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
 			}

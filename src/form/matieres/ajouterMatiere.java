@@ -1,28 +1,17 @@
 package form.matieres;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import BLL.matiereBLL;
 import entite.matiere;
 import form.menu;
 
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTextField;
-import javax.swing.JButton;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class ajouterMatiere extends JFrame {
@@ -46,7 +35,7 @@ public class ajouterMatiere extends JFrame {
 		JPanel top = new JPanel();
 		top.setBackground(new Color(102, 0, 0));
 		
-		JLabel lblNomMatiere = new JLabel("Nom Mati\u00E8re :");
+		JLabel lblNomMatiere = new JLabel("Nom MatiÃ¨re :");
 		
 		JLabel lblNbrHeures = new JLabel("Nombre d'heures :");
 		
@@ -95,7 +84,7 @@ public class ajouterMatiere extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				// Si les champs du formulaire ne sont pas vides, on insert la nouvelle classe en base
 				if (!nomMatiereText.getText().isEmpty() && !nbrHeuresText.getText().isEmpty() && hibernate.fonctions.isInt(nbrHeuresText.getText())){
-					// Création de la classe à partir du formulaire
+					// CrÃ©ation de la classe Ã  partir du formulaire
 					matiere newMatiere = new matiere(nomMatiereText.getText(), Integer.parseInt(nbrHeuresText.getText()));
 					
 					// On essaie de sauvegarder la classe
@@ -103,8 +92,8 @@ public class ajouterMatiere extends JFrame {
 						Boolean realiser = matiereBLL.saveMatiere(newMatiere);
 						
 						if (realiser == false){
-							// Boîte du message préventif
-							JOptionPane.showMessageDialog(null, "La matière a bien été enregistrée.", "Valider", JOptionPane.INFORMATION_MESSAGE);
+							// Boite du message prÃ©ventif
+							JOptionPane.showMessageDialog(null, "La matiÃ¨re a bien Ã©tÃ© enregistrÃ©e.", "Valider", JOptionPane.INFORMATION_MESSAGE);
 							
 							menu eMenu = new menu();
 							eMenu.setVisible(true);
@@ -116,11 +105,11 @@ public class ajouterMatiere extends JFrame {
 							 */
 						}
 						else{
-							// Boîte du message préventif
+							// Boite du message prÃ©ventif
 							JOptionPane.showMessageDialog(null, "Une erreur s'est produite.", "Valider", JOptionPane.WARNING_MESSAGE);
 						}
 					}
-					// Et si on n'y arrive pas on gère l'erreur
+					// Et si on n'y arrive pas on gÃ¨re l'erreur
 					catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -130,15 +119,15 @@ public class ajouterMatiere extends JFrame {
 						dispose();
 					}
 				}
-				// On avertit l'utilisateur si le nombre d'élèves n'est pas numérique
+				// On avertit l'utilisateur si le nombre d'Ã©lÃ¨ves n'est pas numÃ©rique
 				else if (!hibernate.fonctions.isInt(nbrHeuresText.getText())){
-					// Boîte du message préventif
+					// Boite du message prÃ©ventif
 					JOptionPane.showMessageDialog(null, "Le nombre d'heure n'est pas un nombre !", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
 				// Sinon, on avertit l'utilisateur
 				else
 				{
-					// Boîte du message préventif
+					// Boite du message prÃ©ventif
 					JOptionPane.showMessageDialog(null, "Certains champs sont vides", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
 			}
@@ -173,7 +162,7 @@ public class ajouterMatiere extends JFrame {
 		);
 		bottom.setLayout(gl_bottom);
 		
-		JLabel lblAjoutMatire = new JLabel("Ajout mati\u00E8re");
+		JLabel lblAjoutMatire = new JLabel("Ajout matiÃ¨re");
 		lblAjoutMatire.setForeground(new Color(255, 255, 255));
 		lblAjoutMatire.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 29));
 		GroupLayout gl_top = new GroupLayout(top);

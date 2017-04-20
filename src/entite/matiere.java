@@ -1,7 +1,7 @@
 package entite;
 
 public class matiere {
-	// Attributs privés de la classe
+	// Attributs privÃ©s de la classe
 	private int idMatiere;
 	private String nomMatiere;
 	private int nbrHeures;

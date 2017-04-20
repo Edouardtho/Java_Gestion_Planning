@@ -1,5 +1,8 @@
 package DAO;
 
+import entite.enseigner;
+import hibernate.DBConnection;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,14 +10,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import entite.enseigner;
-import hibernate.DBConnection;
-
 public class enseignerDAO {
 	public static boolean saveEnseigner(enseigner newEnseigner) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "INSERT INTO enseigner (idProf, idMatiere) "
         			+ "VALUES (	'"+newEnseigner.getIdProf()+"', "
         			+ "			'"+newEnseigner.getIdMatiere()+"');" ;
@@ -25,7 +25,7 @@ public class enseignerDAO {
 	public static int updateEnseigner(enseigner majEnseigner) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "UPDATE enseigner "
         			+ "SET	idProf = '"+majEnseigner.getIdProf()+"', "
         			+ "		idMatiere = "+majEnseigner.getIdMatiere()+" "
@@ -37,7 +37,7 @@ public class enseignerDAO {
 	public static Boolean deleteEnseigner(int idEnseigner) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "DELETE FROM enseigner "
         			+ "WHERE idEnseigner = "+idEnseigner+";";
         
@@ -50,7 +50,7 @@ public class enseignerDAO {
 		
 		List<enseigner> list =  new ArrayList<enseigner>();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "SELECT * "
         			+ "FROM matiere";
 

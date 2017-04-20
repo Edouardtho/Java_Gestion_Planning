@@ -1,17 +1,20 @@
 package DAO;
 
+import entite.matiere;
 import hibernate.DBConnection;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import entite.matiere;
 
 public class matiereDAO {
 	public static boolean saveMatiere(matiere newMatiere) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "INSERT INTO matiere (nomMatiere, nbHeures) "
         			+ "VALUES (	'"+newMatiere.getNomMatiere()+"', "
         			+ "			'"+newMatiere.getNbrHeures()+"');" ;
@@ -22,7 +25,7 @@ public class matiereDAO {
 	public static int updateMatiere(matiere majMatiere) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "UPDATE matiere "
         			+ "SET	nomMatiere = '"+majMatiere.getNomMatiere()+"', "
         			+ "		nbHeures = "+majMatiere.getNbrHeures()+" "
@@ -34,14 +37,14 @@ public class matiereDAO {
 	public static Boolean deleteMatiere(int idMatiere) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "DELETE FROM enseigner "
         			+ "WHERE idMatiere = "+idMatiere+";";
         
         Statement smt = access.createStatement() ;
         if (smt.execute(sql))
         {
-			// Envoi d’un requête générique
+			// Envoi d'une requÃªte gÃ©nÃ©rique
 	        sql = "DELETE FROM matiere "
 	        	+ "WHERE idMatiere = "+idMatiere+";";
 	    
@@ -59,7 +62,7 @@ public class matiereDAO {
 		
 		List<matiere> list =  new ArrayList<matiere>();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "SELECT * "
         			+ "FROM matiere";
 

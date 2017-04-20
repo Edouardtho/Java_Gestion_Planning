@@ -7,58 +7,13 @@ package planning;
 *
 */
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.beans.Beans;
-import java.io.File;
-import java.util.Arrays;
-import java.util.Iterator;
+import bb.aboutbox.aboutBox;
+import bb.stretchicon.StretchIcon;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
@@ -67,14 +22,14 @@ import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.Beans;
+import java.io.File;
+import java.util.Arrays;
+import java.util.Iterator;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-import bb.aboutbox.aboutBox;
-import bb.stretchicon.StretchIcon;
-import static bb.constants.constants.*;
+import static bb.constants.constants.mrOK;
 
 public class Calendrier {
 
@@ -198,7 +153,7 @@ public class Calendrier {
 	 * Create the application.
 	 */
 	public Calendrier() {
-		// Année en cours
+		// Annï¿½e en cours
 
 		initialize();
 	}
@@ -277,7 +232,7 @@ public class Calendrier {
 		iYear = Year;
 		iDay = dt.getDayOfYear();
 		
-		// Création de la forme
+		// Crï¿½ation de la forme
 
 		frmCalendrier = new JFrame()
 		// Maximum size bug
@@ -1270,7 +1225,7 @@ public class Calendrier {
 		about.setVersion("Version : "+Config.version+"."+Config.build);		
 		about.setVendor(Config.vendor, Config.builddate);
 		about.setWebsite("Site Web","www.sdtp.com" );
-		about.setURLupdate("Recherche de mise à jour", "www.sdtp.com/versions/version.php?program=jcalendrier&version="+Config.version+"."+Config.build, "Dernière recherche de mise à jour", Config.lastupdchk);
+		about.setURLupdate("Recherche de mise ï¿½ jour", "www.sdtp.com/versions/version.php?program=jcalendrier&version="+Config.version+"."+Config.build, "Derniï¿½re recherche de mise ï¿½ jour", Config.lastupdchk);
 		about.addComponentListener(ppca);	
 		
 
@@ -1601,7 +1556,7 @@ public class Calendrier {
 	    String sf = Quarter.YearDays.get(day-1).ferie;
 	    if (sf.length() > 0) {
 	    	if (sf.charAt(0) == '.') sf = sf.substring(1);
-	    	s += "Férié: "+sf+"<br>"; 
+	    	s += "Fï¿½riï¿½: "+sf+"<br>"; 
 	    }
 	    // moon
 	    String sm = Quarter.YearDays.get(day-1).typelune ;
@@ -1616,7 +1571,7 @@ public class Calendrier {
 	    // Seasons
 	    String ss = Quarter.YearDays.get(day-1).season;
 	    if (ss.length() > 0) {
-	    	s += ss+" à "+Quarter.YearDays.get(day-1).seasondate.toString(fmt)+ "<br>";
+	    	s += ss+" ï¿½ "+Quarter.YearDays.get(day-1).seasondate.toString(fmt)+ "<br>";
 	    }
 	    // Scolar holidays
 	    String sh =  Quarter.YearDays.get(day-1).zonevacscol;
@@ -1639,7 +1594,7 @@ public class Calendrier {
 	    	case 4 :	s += "Vacances scolaires: zones "+sh.substring(0,1)+ "," + sh.substring(1,2)+","+sh.substring(2,3)+","+sh.substring(3)+"<br>";
 	    				break;		
 	    }
-	    s += "Lever et coucher du soleil à "+Config.town+": "+sunrise.toString(fmt)+" - "+sunset.toString(fmt);	
+	    s += "Lever et coucher du soleil ï¿½ "+Config.town+": "+sunrise.toString(fmt)+" - "+sunset.toString(fmt);	
 	    if (Quarter.YearDays.get(day-1).userevent > 0) {
 	    s += "<br>"+Quarter.YearDays.get(day-1).userstring;
 	    }
@@ -1711,7 +1666,7 @@ public class Calendrier {
 			hiv = Astro.GetSaisonDate(Year, 3);
 			hiv = hiv.plusMinutes(Astro.getTZOff(hiv));
 			String s = "<html>Printemps: " +Astro.DateTimeToString(prin, "HH:mm")+"<br>"+
-						"Eté: "+Astro.DateTimeToString(ete, "HH:mm")+"</html>";
+						"Etï¿½: "+Astro.DateTimeToString(ete, "HH:mm")+"</html>";
 			lblSeasons_1a.setText(s);
 			lblSeasons_2a.setText(s);
 			s = "<html>Automne: " +Astro.DateTimeToString(aut, "HH:mm")+"<br>"+

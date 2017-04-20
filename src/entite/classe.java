@@ -1,7 +1,7 @@
 package entite;
 
 public class classe {
-	// Attributs privés de la classe
+	// Attributs privÃ©s de la classe
 	private int idClasse;
 	private String nomClasse;
 	private int nombreEleves;

@@ -1,23 +1,12 @@
 package form;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-import java.awt.Toolkit;
-import javax.swing.JPasswordField;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.event.ActionListener;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
+import java.awt.event.ActionListener;
 
 @SuppressWarnings({ "serial", "unused" })
 public class connexion extends JFrame {
@@ -33,30 +22,15 @@ public class connexion extends JFrame {
 	private JLabel lblErreur;
 
 	/**
-	 * Launch the application.
-	 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					connexion frame = new connexion();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
-	/**
 	 * Create the frame.
 	 */
+
 	public connexion() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("D:\\Utilisateurs\\Guillaume\\Workspace\\Planning\\src\\Iconka-Meow-Cat-poo.ico"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("\\Desktop\\Bachelor3\\Mliki\\image.ico"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 220, 313);
-		setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
-		setResizable(false); //On interdit la redimensionnement de la fenêtre
+		setLocationRelativeTo(null); //On centre la fenÃªtre sur l'Ã©cran
+		setResizable(false); //On interdit la redimensionnement de la fenÃªtre
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -139,7 +113,7 @@ public class connexion extends JFrame {
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
 		);
 		
-		// Bouton "Connexion" et actions menées lors du clic sur le bouton
+		// Bouton "Connexion" et actions menï¿½es lors du clic sur le bouton
 		JButton validerBtn = new JButton("Connexion");
 		validerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

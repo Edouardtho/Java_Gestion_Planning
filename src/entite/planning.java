@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class planning {
-	// Attributs privés de la classe
+	// Attributs privÃ©s de la classe
 	private int idPlanning;
 	private Date jour;
 	private Time heureDebut;

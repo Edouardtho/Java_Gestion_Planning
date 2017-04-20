@@ -1,26 +1,17 @@
 package form.classes;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import BLL.classeBLL;
 import entite.classe;
 import form.menu;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class ajouterClasse extends JFrame {
@@ -61,7 +52,7 @@ public class ajouterClasse extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// Si les champs du formulaire ne sont pas vides, on insert la nouvelle classe en base
 				if (!nomClassText.getText().isEmpty() && !nbrElevesText.getText().isEmpty() && hibernate.fonctions.isInt(nbrElevesText.getText())){
-					// Création de la classe à partir du formulaire
+					// CrÃ©ation de la classe Ã  partir du formulaire
 					classe newClasse = new classe(nomClassText.getText(), Integer.parseInt(nbrElevesText.getText()));
 					
 					// On essaie de sauvegarder la classe
@@ -69,8 +60,8 @@ public class ajouterClasse extends JFrame {
 						Boolean realiser = classeBLL.saveClasse(newClasse);
 						
 						if (realiser == false){
-							// Boîte du message préventif
-							JOptionPane.showMessageDialog(null, "La classe a bien été enregistrée.", "Valider", JOptionPane.INFORMATION_MESSAGE);
+							// Boite du message prÃ©ventif
+							JOptionPane.showMessageDialog(null, "La classe a bien ï¿½tï¿½ enregistrï¿½e.", "Valider", JOptionPane.INFORMATION_MESSAGE);
 							
 							menu eMenu = new menu();
 							eMenu.setVisible(true);
@@ -82,12 +73,12 @@ public class ajouterClasse extends JFrame {
 							 */
 						}
 						else{
-							// Boîte du message préventif
+							// Boite du message prÃ©ventif
 							avertissement = new JOptionPane();
 							avertissement.showMessageDialog(null, "Une erreur s'est produite.", "Valider", JOptionPane.WARNING_MESSAGE);
 						}
 					}
-					// Et si on n'y arrive pas on gère l'erreur
+					// Et si on n'y arrive pas on gÃ¨re l'erreur
 					catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -97,16 +88,16 @@ public class ajouterClasse extends JFrame {
 						dispose();
 					}
 				}
-				// On avertit l'utilisateur si le nombre d'élèves n'est pas numérique
+				// On avertit l'utilisateur si le nombre d'Ã©lÃ¨ves n'est pas numÃ©rique
 				else if (!hibernate.fonctions.isInt(nbrElevesText.getText())){
-					// Boîte du message préventif
+					// Boite du message prÃ©ventif
 					avertissement = new JOptionPane();
-					avertissement.showMessageDialog(null, "Le nombre d'élève n'est pas un nombre !", "Attention", JOptionPane.WARNING_MESSAGE);
+					avertissement.showMessageDialog(null, "Le nombre d'Ã©lÃ¨ve n'est pas un nombre !", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
 				// Sinon, on avertit l'utilisateur
 				else
 				{
-					// Boîte du message préventif
+					/// Boite du message prÃ©ventif
 					avertissement = new JOptionPane();
 					avertissement.showMessageDialog(null, "Certains champs sont vides", "Attention", JOptionPane.WARNING_MESSAGE);
 				}

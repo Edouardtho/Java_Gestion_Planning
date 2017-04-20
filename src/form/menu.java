@@ -1,37 +1,29 @@
 package form;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import BLL.classeBLL;
+import BLL.matiereBLL;
+import BLL.personneBLL;
+import entite.classe;
+import entite.matiere;
+import entite.personne;
+import form.classes.ajouterClasse;
+import form.classes.modifierClasse;
+import form.classes.supprimerClasse;
+import form.matieres.ajouterMatiere;
+import form.matieres.modifierMatiere;
+import form.matieres.supprimerMatiere;
 
-import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JOptionPane;
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
-import BLL.classeBLL;
-import BLL.matiereBLL;
-import BLL.personneBLL;
-import form.classes.*;
-import form.matieres.*;
-import entite.*;
-
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.SQLException;
 
 @SuppressWarnings("serial")
 public class menu extends JFrame {
@@ -57,7 +49,7 @@ public class menu extends JFrame {
 	private DefaultTableModel model;
 
 	/**
-	 * Création de la fenêtre.
+	 * CrÃ©ation de la fenÃªtre.
 	 * @throws Exception
 	 */
 	public static void main(String[] args) {
@@ -118,7 +110,7 @@ public class menu extends JFrame {
 		
 		/********************************************************* Classes ********************************************************/
 		// Tuto : http://stackoverflow.com/questions/3549206/how-to-add-row-in-jtable
-		// Création du modèle de la table (colonnes)...
+		// CrÃ©ation du modÃ¨le de la table (colonnes)...
 		model = new DefaultTableModel();
 		
 		btnAjouterClasse = new JButton("Ajouter");
@@ -180,11 +172,11 @@ public class menu extends JFrame {
 		tableauClasses = getTableauClasse(model, btnAjouterClasse, btnModifierClasse, btnSupprimerClasse/*, btnActualiserClasses*/);
 		/**************************************************************************************************************************/
 		
-		/******************************************************** Matières ********************************************************/
+		/******************************************************** Matiï¿½res ********************************************************/
 		model = new DefaultTableModel();
 		JPanel panelMatieres = new JPanel();
 		panelMatieres.setBackground(new Color(255, 255, 255));
-		modules.addTab("Mati\u00E8res", null, panelMatieres, null);
+		modules.addTab("MatiÃ¨res", null, panelMatieres, null);
 		
 		tableauMatieres= new JTable(model);
 		JScrollPane scrollPaneMatieres = new JScrollPane(tableauMatieres);
@@ -202,8 +194,8 @@ public class menu extends JFrame {
 			}
 		}
 		catch (Exception e){
-			// Boîte du message préventif
-			JOptionPane.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+			// Boite du message prÃ©ventif
+			JOptionPane.showMessageDialog(null, "Erreur de connection Ã  la base de donnÃ©es !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
 		}
 		
 		JButton btnAjouterMatiere = new JButton("Ajouter");
@@ -287,8 +279,8 @@ public class menu extends JFrame {
 			}
 		}
 		catch (Exception e){
-			// Boîte du message préventif
-			JOptionPane.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+			// Boite du message prÃ©ventif
+			JOptionPane.showMessageDialog(null, "Erreur de connection Ã  la base de donnÃ©es !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
 		}
 		
 		JButton btnModifierProf = new JButton("Modifier");
@@ -397,8 +389,8 @@ public class menu extends JFrame {
 			}
 		}
 		catch (Exception e){
-			// Boîte du message préventif
-			JOptionPane.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+			// Boite du message prÃ©ventif
+			JOptionPane.showMessageDialog(null, "Erreur de connection Ã  la base de donnÃ©es !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
 		}
 		
 		GroupLayout gl_panelClasses = new GroupLayout(panelClasses);

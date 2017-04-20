@@ -1,17 +1,16 @@
 package hibernate;
 
-import java.util.ArrayList;
-
 import form.menu;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 public class fonctions {
-	// Cette fonction encode des chaînes de caractères en MD5
+	// Cette fonction encode des chaines de caractÃ¨res en MD5
 	public static String md5(String password)
     {
         byte[] uniqueKey = password.getBytes();
@@ -41,13 +40,13 @@ public class fonctions {
         return hashString.toString();
     }
 	
-	// Cette fonction créé un nouveau menu
+	// Cette fonction crÃ©e un nouveau menu
 	public void close(){
 		menu eMenu = new menu();
 		eMenu.setVisible(true);
 	}
 	
-	// Fonction permettant de dire si une chaine de caractère est un entier
+	// Fonction permettant de dire si une chaine de caractÃ¨re est un entier
 	public static boolean isInt(String chaine){ 
 		boolean valeur = true; 
 		char[] tab = chaine.toCharArray(); 
@@ -60,21 +59,21 @@ public class fonctions {
 		return valeur; 
 	}
 	
-	// Fonction qui récupère le nom des colonnes des tables
+	// Fonction qui rÃ©cupÃ¨re le nom des colonnes des tables
 	public static ArrayList<String> nomColonnes(String table) throws Exception{
-		// Création de la liste
+		// CrÃ©ation de la liste
 		ArrayList<String> lesNomsColonnes = new ArrayList<String>();
 		
-		// On se connecte à la base
+		// On se connecte Ã  la base
 		Connection access = DBConnection.getInstance();
 		
-		// Récupération des métadonnées à partir de Connection
+		// RÃ©cupÃ©ration des mÃ©tadonnÃ©es Ã  partir de Connection
 		DatabaseMetaData dmd = access.getMetaData();
 		
-		// Récupération des informations
+		// RÃ©cupÃ©ration des informations
 		ResultSet resultat = dmd.getColumns(access.getCatalog(),null, table, "%");
 		
-		// Ajout des données dans la liste
+		// Ajout des donnÃ©es dans la liste
 		while(resultat.next()){
 			lesNomsColonnes.add(resultat.getObject(4).toString());
 		}

@@ -1,21 +1,17 @@
 package form.classes;
 
-import java.awt.BorderLayout;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-
 import BLL.classeBLL;
 import entite.classe;
 
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class listeClasses extends JFrame {
@@ -25,7 +21,7 @@ public class listeClasses extends JFrame {
 	private JPanel contentPane;
 	private JOptionPane avertissement;
 	private List<classe> listeClasse;
-	private final String[] entetes = {"Id classe", "Nom", "Nombre d'élèves"};
+	private final String[] entetes = {"Id classe", "Nom", "Nombre d'ï¿½lï¿½ves"};
 	
 	/**
 	 * Create the frame.
@@ -42,13 +38,13 @@ public class listeClasses extends JFrame {
 			listeClasse = classeBLL.listeClasses();
 		}
 		catch (Exception e){
-			// Boîte du message préventif
+			// Boite du message prÃ©ventif
 			avertissement = new JOptionPane();
-			avertissement.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+			avertissement.showMessageDialog(null, "Erreur de connection ï¿½ la base de donnï¿½es !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
 		}
 		
 		// Tuto : http://stackoverflow.com/questions/3549206/how-to-add-row-in-jtable
-		// Création du modèle de la table (colonnes)...
+		// CrÃ©ation du modÃ¨le de la table (colonnes)...
 		DefaultTableModel model = new DefaultTableModel();
 		
 		// ...et du tableau
@@ -62,7 +58,7 @@ public class listeClasses extends JFrame {
 			model.addColumn(uneColonne);
 		}
 		
-		// Ajout des données à partir de la base de données
+		// Ajout des donnÃ©es Ã  partir de la base de donnÃ©es
 		try {
 			for (classe uneClasse:listeClasse)
 			{
@@ -70,12 +66,12 @@ public class listeClasses extends JFrame {
 			}
 		}
 		catch(Exception e){
-			// Boîte du message préventif
+			// Boite du message prÃ©ventif
 			avertissement = new JOptionPane();
 			avertissement.showMessageDialog(null, "Erreur de remplissage de la liste !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
 		}
 		
-		JButton btnLoadClasses = new JButton("Chargement des donn\u00E9es");
+		JButton btnLoadClasses = new JButton("Chargement des donnÃ©es");
 		btnLoadClasses.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				

@@ -5,13 +5,19 @@ package planning;
  * bb - november 2013
  */
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.Rectangle;
+import com.toedter.calendar.JDateChooser;
+import org.joda.time.DateTime;
+import org.joda.time.Minutes;
+import org.joda.time.MutableDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.event.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -20,38 +26,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Date;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.SpinnerDateModel;
-import javax.swing.UIManager;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import org.joda.time.DateTime;
-import org.joda.time.Minutes;
-import org.joda.time.MutableDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-import com.toedter.calendar.JDateChooser;
 
 import static bb.constants.constants.*;
 
@@ -153,7 +127,7 @@ public class dlgEvent extends JDialog {
 	}
 
 	public ArrayList <String[]> arrEvents= new ArrayList <String[]> ();
-	public Event event = new Event(-2, null, null, null, false, "E", "Nouvel évenement", "", "");
+	public Event event = new Event(-2, null, null, null, false, "E", "Nouvel ï¿½venement", "", "");
 	public boolean changed;
 	//public boolean mrOK= false;
 	public int [] deleted = new int [50];
@@ -173,11 +147,11 @@ public class dlgEvent extends JDialog {
 	private JSpinner tiEvEnd;
 	private ChangeListener clee;
 	//cbRecall strings
-	private String [] cbrarr = {"Aucun", "Heure de début", "5 minutes avant", "10 minutes avant", "15 minutes avant", "30 minutes avant", "1 heure avant", "Autre"};
+	private String [] cbrarr = {"Aucun", "Heure de dï¿½but", "5 minutes avant", "10 minutes avant", "15 minutes avant", "30 minutes avant", "1 heure avant", "Autre"};
 	private int [] cbrmins =  {0,0,5,10,15,30,60,0};
 	private JComboBox <String> cbRecall;
 	// Event type string
-	private String [] cbtarr = {"Evenement", "Fête", "Anniversaire"};	
+	private String [] cbtarr = {"Evenement", "Fï¿½te", "Anniversaire"};	
 	@SuppressWarnings("unused")
 	private char [] cbtchar = {'E', 'F', 'A'};
 	private JComboBox<String> cbType;	
@@ -222,12 +196,12 @@ public class dlgEvent extends JDialog {
 		Curdate.setSecondOfMinute(0);
 		Curdate.setMillisOfSecond(0);
 		// Create new event
-		event= new Event (-2, new DateTime(Curdate), new DateTime(Curdate).plusMinutes(30), new DateTime(Curdate), false, "E", "Nouvel évenement", "", "");
+		event= new Event (-2, new DateTime(Curdate), new DateTime(Curdate).plusMinutes(30), new DateTime(Curdate), false, "E", "Nouvel ï¿½venement", "", "");
 		arrEvents.clear();
 		arrEvents.add(event.toArray());
 		evList.removeListSelectionListener(llev);
 		lm.clear();
-		lm.addElement("<Nouvel évenement>");
+		lm.addElement("<Nouvel ï¿½venement>");
 		evList.addListSelectionListener(llev);
 		setBegdate(Curdate);
 		setBegtime(event.begDate);
@@ -259,7 +233,7 @@ public class dlgEvent extends JDialog {
 			}
 		});
 		
-		event= new Event (-2, new DateTime(), new DateTime().plusMinutes(30), new DateTime(), false, "E", "Nouvel évenement", "", "");
+		event= new Event (-2, new DateTime(), new DateTime().plusMinutes(30), new DateTime(), false, "E", "Nouvel ï¿½venement", "", "");
 		arrEvents.add(event.toArray());
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setTitle("Nouvel \u00E9v\u00E9nement");
@@ -355,7 +329,7 @@ public class dlgEvent extends JDialog {
 		evList.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		evList.setVisibleRowCount(5);
 		
-		lm.addElement("<Nouvel événement>");
+		lm.addElement("<Nouvel ï¿½vï¿½nement>");
 		
 		evList.setSelectedIndex(0);
 		

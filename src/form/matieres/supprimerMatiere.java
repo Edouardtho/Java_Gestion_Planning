@@ -1,28 +1,18 @@
 package form.matieres;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import BLL.matiereBLL;
 import entite.matiere;
 import form.menu;
 
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JComboBox;
-import java.awt.Color;
-import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import java.util.List;
-import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.awt.event.ActionEvent;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class supprimerMatiere extends JFrame {
@@ -36,7 +26,7 @@ public class supprimerMatiere extends JFrame {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public supprimerMatiere() {
-		setTitle("Supprimer mati\u00E8re");
+		setTitle("Supprimer matiÃ¨re");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 367, 200);
@@ -49,11 +39,11 @@ public class supprimerMatiere extends JFrame {
 			listeMatiere = matiereBLL.listeMatieres();
 		}
 		catch (Exception e){
-			// Boîte du message préventif
-			JOptionPane.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+			// Boite du message prÃ©ventif
+			JOptionPane.showMessageDialog(null, "Erreur de connection Ã  la base de donnÃ©es !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
 		}
 		
-		cmbxMatiere.addItem("Sélectionnez une matière");
+		cmbxMatiere.addItem("SÃ©lectionnez une matiÃ¨re");
 		
 		for(matiere uneMatiere:listeMatiere){
 			cmbxMatiere.addItem(uneMatiere.getNomMatiere());
@@ -76,42 +66,42 @@ public class supprimerMatiere extends JFrame {
 		JButton btnModifier = new JButton("Modifier");
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Boîte du message préventif
-				int rs = JOptionPane.showConfirmDialog(null, "Êtes-vous sûr de vouloir supprimer '"+listeMatiere.get(cmbxMatiere.getSelectedIndex()-1).getNomMatiere()+"' ?", "Supression", JOptionPane.OK_CANCEL_OPTION);
+				// Boite du message prÃ©ventif
+				int rs = JOptionPane.showConfirmDialog(null, "Ãªtes-vous sÃ»r de vouloir supprimer '"+listeMatiere.get(cmbxMatiere.getSelectedIndex()-1).getNomMatiere()+"' ?", "Supression", JOptionPane.OK_CANCEL_OPTION);
 				
-				// Si le résultat du message est ok
+				// Si le rÃ©sultat du message est ok
 				if (rs == 0){
 					// On essaie de sauvegarder la classe
 					try {
 						Boolean realiser = matiereBLL.deleteMatiere(listeMatiere.get(cmbxMatiere.getSelectedIndex()-1).getIdMatiere());
 						
 						if (realiser == false){
-							// Boîte du message préventif
-							JOptionPane.showMessageDialog(null, "La matière a bien été supprimée.", "Valider", JOptionPane.INFORMATION_MESSAGE);
+							// Boite du message prÃ©ventif
+							JOptionPane.showMessageDialog(null, "La matiÃ¨re a bien Ã©tÃ© supprimÃ©e.", "Valider", JOptionPane.INFORMATION_MESSAGE);
 							
 							menu eMenu = new menu();
 							eMenu.setVisible(true);
 							dispose();
 						}
 						else{
-							// Boîte du message préventif
+							// Boite du message prÃ©ventif
 							JOptionPane.showMessageDialog(null, "Une erreur s'est produite.", "Valider", JOptionPane.WARNING_MESSAGE);
 						}
 					}
-					// Et si on n'y arrive pas on gère l'erreur
+					// Et si on n'y arrive pas on gÃ¨re l'erreur
 					catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
-				// Si Aucune classe n'est sélectionnée
-				else if (cmbxMatiere.getSelectedItem().toString() == "Sélectionnez une matière"){
-					// Boîte du message préventif
-					JOptionPane.showMessageDialog(null, "Aucune classe n'est sélectionnée !", "Attention", JOptionPane.WARNING_MESSAGE);
+				// Si Aucune classe n'est sÃ©lectionnÃ©e
+				else if (cmbxMatiere.getSelectedItem().toString() == "SÃ©lectionnez une matiÃ¨re"){
+					// Boite du message prÃ©ventif
+					JOptionPane.showMessageDialog(null, "Aucune classe n'est sÃ©lectionnÃ©e !", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
 				// Si une autre erreur survient
 				else{
-					// Boîte du message préventif
+					// Boite du message prÃ©ventif
 					JOptionPane.showMessageDialog(null, "Une erreur est survenue !", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
 			}
@@ -149,7 +139,7 @@ public class supprimerMatiere extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(102, 0, 0));
 		
-		JLabel lblSupprimerMatire = new JLabel("Supprimer mati\u00E8re");
+		JLabel lblSupprimerMatire = new JLabel("Supprimer matiÃ¨re");
 		lblSupprimerMatire.setForeground(Color.WHITE);
 		lblSupprimerMatire.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 29));
 		lblSupprimerMatire.setBackground(Color.WHITE);

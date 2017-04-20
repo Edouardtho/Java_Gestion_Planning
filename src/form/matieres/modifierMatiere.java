@@ -1,30 +1,18 @@
 package form.matieres;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import BLL.matiereBLL;
 import entite.matiere;
 import form.menu;
 
-import javax.swing.GroupLayout;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.Color;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
-import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class modifierMatiere extends JFrame {
@@ -39,7 +27,7 @@ public class modifierMatiere extends JFrame {
 	 */
 	public modifierMatiere() {
 		setResizable(false);
-		setTitle("Modifier mati\u00E8re");
+		setTitle("Modifier matitiÃ¨re");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 377, 254);
 		contentPane = new JPanel();
@@ -58,11 +46,11 @@ public class modifierMatiere extends JFrame {
 			listeMatieres = matiereBLL.listeMatieres();
 		}
 		catch (Exception e){
-			// Boîte du message préventif
-			JOptionPane.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+			// Boite du message prÃ©ventif
+			JOptionPane.showMessageDialog(null, "Erreur de connection Ã  la base de donnÃ©es !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
 		}
 		
-		cmbxMatiere.addItem("Sélectionnez une classe");
+		cmbxMatiere.addItem("SÃ©lectionnez une classe");
 		
 		for(matiere uneMatiere:listeMatieres){
 			cmbxMatiere.addItem(uneMatiere.getNomMatiere());
@@ -81,7 +69,7 @@ public class modifierMatiere extends JFrame {
 			}
 		});
 		
-		JLabel lblNomMatiere = new JLabel("Nom de la mati\u00E8re :");
+		JLabel lblNomMatiere = new JLabel("Nom de la matiÃ¨re :");
 		
 		JLabel lblNbrHeures = new JLabel("Nombre d'heures :");
 		
@@ -135,7 +123,7 @@ public class modifierMatiere extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// Si les champs du formulaire ne sont pas vides, on insert la nouvelle classe en base
 				if (!nomMatiereText.getText().isEmpty() && !nbrHeuresText.getText().isEmpty() && hibernate.fonctions.isInt(nbrHeuresText.getText())){
-					// Création de la classe à partir du formulaire
+					// CrÃ©ation de la classe Ã  partir du formulaire
 					matiere majMatiere = new matiere(listeMatieres.get(cmbxMatiere.getSelectedIndex()-1).getIdMatiere(), nomMatiereText.getText(), Integer.parseInt(nbrHeuresText.getText()));
 					
 					// On essaie de sauvegarder la classe
@@ -143,38 +131,38 @@ public class modifierMatiere extends JFrame {
 						int realiser = matiereBLL.updateMatiere(majMatiere);
 						
 						if (realiser == 1){
-							// Boîte du message préventif
-							JOptionPane.showMessageDialog(null, "La matière a bien été modifiée.", "Valider", JOptionPane.INFORMATION_MESSAGE);
+							// Boite du message prÃ©ventif
+							JOptionPane.showMessageDialog(null, "La matiÃ¨re a bien Ã©tÃ© modifiÃ©e.", "Valider", JOptionPane.INFORMATION_MESSAGE);
 							
 							menu eMenu = new menu();
 							eMenu.setVisible(true);
 							dispose();
 						}
 						else{
-							// Boîte du message préventif
+							// Boite du message prÃ©ventif
 							JOptionPane.showMessageDialog(null, "Une erreur s'est produite.", "Valider", JOptionPane.WARNING_MESSAGE);
 						}
 					}
-					// Et si on n'y arrive pas on gère l'erreur
+					// Et si on n'y arrive pas on gÃ¨re l'erreur
 					catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
-				else if (cmbxMatiere.getSelectedItem().toString() == "Sélectionnez une classe")
+				else if (cmbxMatiere.getSelectedItem().toString() == "SÃ©lectionnez une classe")
 				{
-					// Boîte du message préventif
-					JOptionPane.showMessageDialog(null, "Aucune classe n'est sélectionnée !", "Attention", JOptionPane.WARNING_MESSAGE);
+					// Boite du message prÃ©ventif
+					JOptionPane.showMessageDialog(null, "Aucune classe n'est sÃ©lectionnÃ©e !", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
-				// On avertit l'utilisateur si le nombre d'élèves n'est pas numérique
+				// On avertit l'utilisateur si le nombre d'Ã©lÃ¨ves n'est pas numÃ©rique
 				else if (!hibernate.fonctions.isInt(nbrHeuresText.getText())){
-					// Boîte du message préventif
-					JOptionPane.showMessageDialog(null, "Le nombre d'élève n'est pas un nombre !", "Attention", JOptionPane.WARNING_MESSAGE);
+					// Boite du message prÃ©ventif
+					JOptionPane.showMessageDialog(null, "Le nombre d'Ã©lÃ¨ve n'est pas un nombre !", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
 				// Sinon, on avertit l'utilisateur
 				else
 				{
-					// Boîte du message préventif
+					// Boite du message prÃ©ventif
 					JOptionPane.showMessageDialog(null, "Certains champs sont vides", "Attention", JOptionPane.WARNING_MESSAGE);
 				}
 			}
@@ -209,7 +197,7 @@ public class modifierMatiere extends JFrame {
 		);
 		bottom.setLayout(gl_bottom);
 		
-		JLabel lblModifierMatire = new JLabel("Modifier mati\u00E8re");
+		JLabel lblModifierMatire = new JLabel("Modifier matiÃ¨re");
 		lblModifierMatire.setForeground(new Color(255, 255, 255));
 		lblModifierMatire.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 29));
 		lblModifierMatire.setBackground(new Color(255, 255, 255));

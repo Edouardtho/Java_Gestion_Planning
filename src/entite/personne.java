@@ -3,7 +3,7 @@ package entite;
 import hibernate.fonctions;
 
 public class personne {
-	// Attributs privés de la classe
+	// Attributs privÃ©s de la classe
 	private int	idPersonne;
 	private String nom;
 	private String prenom;

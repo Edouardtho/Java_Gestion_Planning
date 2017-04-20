@@ -1,5 +1,8 @@
 package DAO;
 
+import entite.planning;
+import hibernate.DBConnection;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,14 +10,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import entite.planning;
-import hibernate.DBConnection;
-
 public class planningDAO {
 	public static boolean savePlanning(planning newPlanning) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "INSERT INTO planning (jour, heureDebut, heureFin, idSalle, idProf, idMatiere) "
         			+ "VALUES (	'"+newPlanning.getJour()+"', "
         			+ "			'"+newPlanning.getHeureDebut()+"', "
@@ -29,7 +29,7 @@ public class planningDAO {
 	public static int updatePlanning(planning majPlanning) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "UPDATE planning "
         			+ "SET	jour = '"+majPlanning.getJour()+"', "
         			+ "		heureDebut = "+majPlanning.getHeureDebut()+", "
@@ -45,7 +45,7 @@ public class planningDAO {
 	public static Boolean deletePlanning(int idPlanning) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "DELETE FROM planning "
         			+ "WHERE idPlanning = "+idPlanning+";";
         
@@ -58,7 +58,7 @@ public class planningDAO {
 		
 		List<planning> list =  new ArrayList<planning>();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "SELECT * "
         			+ "FROM planning";
 

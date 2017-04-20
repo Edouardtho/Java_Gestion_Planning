@@ -1,5 +1,8 @@
 package DAO;
 
+import entite.salle;
+import hibernate.DBConnection;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,14 +10,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import entite.salle;
-import hibernate.DBConnection;
-
 public class salleDAO {
 	public static boolean saveSalle(salle newSalle) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "INSERT INTO salle (nomSalle, capaciteSalle) "
         			+ "VALUES (	'"+newSalle.getNomSalle()+"', "
         			+ "			'"+newSalle.getCapaciteSalle()+"';" ;
@@ -25,7 +25,7 @@ public class salleDAO {
 	public static int updateSalle(salle majSalle) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "UPDATE salle "
         			+ "SET	nomSalle = '"+majSalle.getNomSalle()+"', "
         			+ "		capaciteSalle = "+majSalle.getCapaciteSalle()+" "
@@ -37,7 +37,7 @@ public class salleDAO {
 	public static Boolean deleteSalle(int idSalle) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "DELETE FROM salle "
         			+ "WHERE idProf = "+idSalle+";";
         
@@ -50,7 +50,7 @@ public class salleDAO {
 		
 		List<salle> list =  new ArrayList<salle>();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "SELECT * "
         			+ "FROM salle";
 

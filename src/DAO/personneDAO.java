@@ -1,5 +1,8 @@
 package DAO;
 
+import entite.personne;
+import hibernate.DBConnection;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,14 +10,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import entite.personne;
-import hibernate.DBConnection;
-
 public class personneDAO {
 	public static boolean savePersonne(personne newPersonne) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "INSERT INTO personne (nom, prenom, email) "
         			+ "VALUES (	'"+newPersonne.getNom()+"', "
         			+ "			'"+newPersonne.getPrenom()+"', "
@@ -26,7 +26,7 @@ public class personneDAO {
 	public static int updatePersonne(personne majPersonne) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "UPDATE personne "
         			+ "SET	nom = '"+majPersonne.getNom()+"', "
         			+ "		prenom = "+majPersonne.getPrenom()+", "
@@ -39,7 +39,7 @@ public class personneDAO {
 	public static Boolean deletePersonne(int idPersonne) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "DELETE FROM personne "
         			+ "WHERE idProf = "+idPersonne+";";
         
@@ -52,7 +52,7 @@ public class personneDAO {
 		
 		List<personne> list = new ArrayList<personne>();
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "SELECT * "
         			+ "FROM personne";
 
@@ -75,7 +75,7 @@ public class personneDAO {
 		
 		personne unePersonne = null;
 		
-		// Envoi d’un requête générique
+		// Envoi d'une requÃªte gÃ©nÃ©rique
         String sql 	= "SELECT * "
         			+ "FROM personne "
         			+ "WHERE identifiant = '"+identifiant+"' "

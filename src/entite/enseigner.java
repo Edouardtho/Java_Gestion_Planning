@@ -1,7 +1,7 @@
 package entite;
 
 public class enseigner {
-	// Attributs privés de la classe
+	// Attributs privÃ©s de la classe
 	private int idEnseigner;
 	private int idProf;
 	private int idMatiere;
