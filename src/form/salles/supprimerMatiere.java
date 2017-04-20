@@ -1,4 +1,4 @@
-package form.matieres;
+package form.salles;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -149,23 +149,23 @@ public class supprimerMatiere extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(102, 0, 0));
 		
-		JLabel lblSupprimerMatiere = new JLabel("Supprimer mati\u00E8re");
-		lblSupprimerMatiere.setForeground(Color.WHITE);
-		lblSupprimerMatiere.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 29));
-		lblSupprimerMatiere.setBackground(Color.WHITE);
+		JLabel lblSupprimerMatire = new JLabel("Supprimer mati\u00E8re");
+		lblSupprimerMatire.setForeground(Color.WHITE);
+		lblSupprimerMatire.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 29));
+		lblSupprimerMatire.setBackground(Color.WHITE);
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblSupprimerMatiere, GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+					.addComponent(lblSupprimerMatire, GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblSupprimerMatiere)
+					.addComponent(lblSupprimerMatire)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(gl_panel_1);

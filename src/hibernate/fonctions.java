@@ -76,7 +76,8 @@ public class fonctions {
 		
 		// Ajout des données dans la liste
 		while(resultat.next()){
-			lesNomsColonnes.add(resultat.getObject(4).toString());
+			if (resultat.getObject(4).toString() != "motDePasse" )
+				lesNomsColonnes.add(resultat.getObject(4).toString());
 		}
 		return lesNomsColonnes;
 	}

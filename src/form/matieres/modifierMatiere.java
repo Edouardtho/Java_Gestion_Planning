@@ -209,23 +209,23 @@ public class modifierMatiere extends JFrame {
 		);
 		bottom.setLayout(gl_bottom);
 		
-		JLabel lblModifierMatire = new JLabel("Modifier mati\u00E8re");
-		lblModifierMatire.setForeground(new Color(255, 255, 255));
-		lblModifierMatire.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 29));
-		lblModifierMatire.setBackground(new Color(255, 255, 255));
+		JLabel lblModifierMatiere = new JLabel("Modifier mati\u00E8re");
+		lblModifierMatiere.setForeground(new Color(255, 255, 255));
+		lblModifierMatiere.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 29));
+		lblModifierMatiere.setBackground(new Color(255, 255, 255));
 		GroupLayout gl_top = new GroupLayout(top);
 		gl_top.setHorizontalGroup(
 			gl_top.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_top.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblModifierMatire, GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+					.addComponent(lblModifierMatiere, GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_top.setVerticalGroup(
 			gl_top.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_top.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblModifierMatire)
+					.addComponent(lblModifierMatiere)
 					.addContainerGap(35, Short.MAX_VALUE))
 		);
 		top.setLayout(gl_top);

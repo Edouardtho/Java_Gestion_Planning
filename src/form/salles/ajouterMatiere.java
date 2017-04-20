@@ -1,4 +1,4 @@
-package form.matieres;
+package form.salles;
 
 import java.awt.BorderLayout;
 
@@ -173,22 +173,22 @@ public class ajouterMatiere extends JFrame {
 		);
 		bottom.setLayout(gl_bottom);
 		
-		JLabel lblAjoutMatiere = new JLabel("Ajout mati\u00E8re");
-		lblAjoutMatiere.setForeground(new Color(255, 255, 255));
-		lblAjoutMatiere.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 29));
+		JLabel lblAjoutMatire = new JLabel("Ajout mati\u00E8re");
+		lblAjoutMatire.setForeground(new Color(255, 255, 255));
+		lblAjoutMatire.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 29));
 		GroupLayout gl_top = new GroupLayout(top);
 		gl_top.setHorizontalGroup(
 			gl_top.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_top.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblAjoutMatiere, GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+					.addComponent(lblAjoutMatire, GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		gl_top.setVerticalGroup(
 			gl_top.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_top.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblAjoutMatiere)
+					.addComponent(lblAjoutMatire)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		top.setLayout(gl_top);

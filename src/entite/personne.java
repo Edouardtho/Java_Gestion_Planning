@@ -21,12 +21,13 @@ public class personne {
 		this.identifiant = nom.substring(0).toLowerCase() + prenom.substring(0,1);
 	}
 	
-	public personne(int idPersonne, String nom, String prenom, String email, String statut){
+	public personne(int idPersonne, String nom, String prenom, String email, String statut, String identifiant){
 		this.idPersonne = idPersonne;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
 		this.statut = statut;
+		this.identifiant = identifiant;
 	}
 	
 	public personne(String identifiant, String motDePasse){

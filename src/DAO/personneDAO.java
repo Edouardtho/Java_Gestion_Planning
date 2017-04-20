@@ -63,7 +63,8 @@ public class personneDAO {
         										rs.getString("nom"),
         										rs.getString("prenom"),
         										rs.getString("email"),
-        										rs.getString("statut"));
+        										rs.getString("statut"),
+        										rs.getString("identifiant"));
         	list.add(unePersonne);
 		}
 		
@@ -88,7 +89,8 @@ public class personneDAO {
 										rs.getString("nom"),
 										rs.getString("prenom"),
 										rs.getString("email"),
-										rs.getString("statut"));
+										rs.getString("statut"),
+										rs.getString("identifiant"));
 		}
 		
         return unePersonne;
