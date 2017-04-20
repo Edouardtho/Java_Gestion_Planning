@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="src/lib/sqljdbc42.jar"/>
 	<classpathentry kind="var" path="M2_REPO"/>
 	<classpathentry kind="lib" path="src/lib/mysql-connector-java-5.1.41-bin.jar"/>
+	<classpathentry kind="lib" path="src/lib/swingx-0.9.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,77 +1,57 @@
 package DAO;
 
 import hibernate.DBConnection;
-import hibernate.basedonnees;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import entite.classe;
 
 public class classeDAO {
-	static basedonnees seconnecter = new basedonnees();
 	
-	public static Boolean saveClasse(classe newClasse) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
+	public static boolean saveClasse(classe newClasse) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		 // Envoi d’un requête générique
-        String sql 	= "INSERT INTO classe (nomClasse, nombreEleves)"
-        			+ "VALUES ('"+newClasse.getNomClasse()+"','"+newClasse.getNombreEleves() + "');" ;
+		// Envoi d’un requête générique
+        String sql 	= "INSERT INTO classe (nomClasse, nombreEleves) "
+        			+ "VALUES (	'"+newClasse.getNomClasse()+"', "
+        			+ "			'"+newClasse.getNombreEleves() + "');" ;
         
-        Statement smt = access.createStatement() ;
-        boolean rs = smt.execute(sql) ;
-        
-        if (rs)
-        	return true;
-        else
-        	return false;
+        return access.createStatement().execute(sql);
 	}
 	
-	public static Boolean updateClasse(classe majClasse) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
+	public static int updateClasse(classe majClasse) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		 // Envoi d’un requête générique
-        String sql 	= "UPDATE classe (nomClasse, nombreEleves)"
-        			+ "SET nomClasse = '"+majClasse.getNomClasse()+"',"
-        			+ "nombreEleves = '"+majClasse.getNombreEleves()+"'"
-        			+ "WHERE idClasse = "+majClasse.getIdClasse()+")";
+		// Envoi d’un requête générique
+        String sql 	= "UPDATE classe "
+        			+ "SET	nomClasse = '"+majClasse.getNomClasse()+"', "
+        			+ "		nombreEleves = "+majClasse.getNombreEleves()+" "
+        			+ "WHERE idClasse = "+majClasse.getIdClasse()+";";
         
-        Statement smt = access.createStatement() ;
-        ResultSet rs = smt.executeQuery(sql) ;
-        
-        if (rs.next())
-        	return true;
-        else
-        	return false;
+        return access.createStatement().executeUpdate(sql);
 	}
 	
-	public static Boolean deleteClasse(classe suprClasse) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
+	public static Boolean deleteClasse(int idClasse) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
-		 // Envoi d’un requête générique
+		// Envoi d’un requête générique
         String sql 	= "DELETE FROM classe "
-        			+ "WHERE idClasse = "+suprClasse.getIdClasse()+")";
+        			+ "WHERE idClasse = "+idClasse+";";
         
         Statement smt = access.createStatement() ;
-        ResultSet rs = smt.executeQuery(sql) ;
-        
-        if (rs.next())
-        	return true;
-        else
-        	return false;
+        return smt.execute(sql) ;
 	}
 	
-	public static List<classe> listeClasse() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
+	public static List<classe> listeClasses() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
 		Connection access = DBConnection.getInstance();
 		
 		List<classe> list =  new ArrayList<classe>();
 		
-		 // Envoi d’un requête générique
-        String sql 	= "SELECT *"
+		// Envoi d’un requête générique
+        String sql 	= "SELECT * "
         			+ "FROM classe";
-        
-        Statement smt = access.createStatement() ;
-        ResultSet rs = smt.executeQuery(sql) ;
+
+        ResultSet rs = access.createStatement().executeQuery(sql) ;
         
         while (rs.next()) {
         	classe uneClasse = new classe(rs.getInt("idClasse"), rs.getString("nomClasse"), rs.getInt("nombreEleves"));
@@ -79,6 +59,5 @@ public class classeDAO {
 		}
 		
         return list;
-        
 	}
 }

@@ -2,10 +2,16 @@ package form.classes;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 import BLL.classeBLL;
 import entite.classe;
+import hibernate.fonctions;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -13,23 +19,18 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class modifierClasse extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField nomClassText;
-	private JTextField nbrEleveText;
-	private JOptionPane avertissement;
+	private JTextField nbrElevesText;
+	private fonctions mesFonctions;
 	
 	private List<classe> listeClasse;
 	
@@ -54,15 +55,12 @@ public class modifierClasse extends JFrame {
 		lblModifClasse.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		
 		JComboBox cmbxClasse = new JComboBox();
-		cmbxClasse.setToolTipText("");
-		
 		try {
-		listeClasse = classeBLL.listeClasse();
+			listeClasse = classeBLL.listeClasses();
 		}
 		catch (Exception e){
 			// Boîte du message préventif
-			avertissement = new JOptionPane();
-			avertissement.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
 		}
 		
 		cmbxClasse.addItem("Sélectionnez une classe");
@@ -71,16 +69,72 @@ public class modifierClasse extends JFrame {
 			cmbxClasse.addItem(uneClasse.getNomClasse());
 		}
 		
+		cmbxClasse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cmbxClasse.getSelectedIndex() == 0){
+					nomClassText.setText("");
+					nbrElevesText.setText("");
+				}
+				else{
+					nomClassText.setText(listeClasse.get(cmbxClasse.getSelectedIndex()-1).getNomClasse());
+					nbrElevesText.setText(String.valueOf(listeClasse.get(cmbxClasse.getSelectedIndex()-1).getNombreEleves()));
+				}
+			}
+		});
+		
 		JButton btnModifier = new JButton("Modifier");
 		btnModifier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+				// Si les champs du formulaire ne sont pas vides, on insert la nouvelle classe en base
+				if (!nomClassText.getText().isEmpty() && !nbrElevesText.getText().isEmpty() && hibernate.fonctions.isInt(nbrElevesText.getText())){
+					// Création de la classe à partir du formulaire
+					classe newClasse = new classe(listeClasse.get(cmbxClasse.getSelectedIndex()-1).getIdClasse(), nomClassText.getText(), Integer.parseInt(nbrElevesText.getText()));
+					
+					// On essaie de sauvegarder la classe
+					try {
+						int realiser = classeBLL.updateClasse(newClasse);
+						
+						if (realiser == 1){
+							// Boîte du message préventif
+							JOptionPane.showMessageDialog(null, "La classe a bien été modifiée.", "Valider", JOptionPane.INFORMATION_MESSAGE);
+							
+							mesFonctions.close();
+							dispose();
+						}
+						else{
+							// Boîte du message préventif
+							JOptionPane.showMessageDialog(null, "Une erreur s'est produite.", "Valider", JOptionPane.WARNING_MESSAGE);
+						}
+					}
+					// Et si on n'y arrive pas on gère l'erreur
+					catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				else if (cmbxClasse.getSelectedItem().toString() == "Sélectionnez une classe")
+				{
+					// Boîte du message préventif
+					JOptionPane.showMessageDialog(null, "Aucune classe n'est sélectionnée !", "Attention", JOptionPane.WARNING_MESSAGE);
+				}
+				// On avertit l'utilisateur si le nombre d'élèves n'est pas numérique
+				else if (!hibernate.fonctions.isInt(nbrElevesText.getText())){
+					// Boîte du message préventif
+					JOptionPane.showMessageDialog(null, "Le nombre d'élève n'est pas un nombre !", "Attention", JOptionPane.WARNING_MESSAGE);
+				}
+				// Sinon, on avertit l'utilisateur
+				else
+				{
+					// Boîte du message préventif
+					JOptionPane.showMessageDialog(null, "Certains champs sont vides", "Attention", JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 		
 		JButton btnAnnuler = new JButton("Annuler");
 		btnAnnuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				mesFonctions.close();
 				dispose();
 			}
 		});
@@ -92,33 +146,33 @@ public class modifierClasse extends JFrame {
 		nomClassText = new JTextField();
 		nomClassText.setColumns(10);
 		
-		nbrEleveText = new JTextField();
-		nbrEleveText.setColumns(10);
+		nbrElevesText = new JTextField();
+		nbrElevesText.setColumns(10);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(cmbxClasse, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addComponent(lblModifClasse, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 341, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblModifClasse, GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(104)
-							.addComponent(btnModifier)
+							.addComponent(btnModifier, GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
 							.addGap(18)
-							.addComponent(btnAnnuler))
+							.addComponent(btnAnnuler, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(79))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(lblNomClasse)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(nomClassText, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblNbrEleves)
-							.addGap(10)
-							.addComponent(nbrEleveText, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(cmbxClasse, Alignment.LEADING, 0, 312, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+										.addComponent(lblNomClasse, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+										.addComponent(lblNbrEleves, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+									.addGap(10)
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(nbrElevesText)
+										.addComponent(nomClassText, GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE))))
+							.addGap(24)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -129,17 +183,17 @@ public class modifierClasse extends JFrame {
 					.addComponent(cmbxClasse, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNomClasse)
+						.addComponent(lblNomClasse, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
 						.addComponent(nomClassText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(nbrEleveText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(nbrElevesText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNbrEleves))
-					.addPreferredGap(ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnModifier)
 						.addComponent(btnAnnuler))
-					.addGap(19))
+					.addGap(37))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}

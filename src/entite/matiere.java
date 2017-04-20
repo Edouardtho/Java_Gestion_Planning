@@ -4,13 +4,18 @@ public class matiere {
 	// Attributs privés de la classe
 	private int idMatiere;
 	private String nomMatiere;
-	private int nbHeures;
+	private int nbrHeures;
 	
 	// Constructeur
-	public matiere(int idMatiere, String nomMatiere, int nbHeures){
+	public matiere(String nomMatiere, int nbrHeures){
+		this.nomMatiere = nomMatiere;
+		this.nbrHeures = nbrHeures;
+	}
+	
+	public matiere(int idMatiere, String nomMatiere, int nbrHeures){
 		this.idMatiere = idMatiere;
 		this.nomMatiere = nomMatiere;
-		this.nbHeures = nbHeures;
+		this.nbrHeures = nbrHeures;
 	}
 	
 	// Getters
@@ -20,8 +25,8 @@ public class matiere {
 	public String getNomMatiere() {
 		return nomMatiere;
 	}
-	public int getNbHeures() {
-		return nbHeures;
+	public int getNbrHeures() {
+		return nbrHeures;
 	}
 	
 	// Setters
@@ -31,7 +36,7 @@ public class matiere {
 	public void setNomMatiere(String nomMatiere) {
 		this.nomMatiere = nomMatiere;
 	}
-	public void setNbHeures(int nbHeures) {
-		this.nbHeures = nbHeures;
+	public void setNbrHeures(int nbrHeures) {
+		this.nbrHeures = nbrHeures;
 	}
 }

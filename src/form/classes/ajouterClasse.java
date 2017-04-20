@@ -6,6 +6,8 @@ import javax.swing.border.EmptyBorder;
 
 import BLL.classeBLL;
 import entite.classe;
+import form.menu;
+import hibernate.fonctions;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -26,8 +28,9 @@ public class ajouterClasse extends JFrame {
 	// Initialisation d'attributs
 	private JPanel contentPane;
 	private JTextField nomClassText;
-	private JTextField nbrEleveText;
+	private JTextField nbrElevesText;
 	private JOptionPane avertissement;
+	private fonctions mesFonctions;
 
 	/**
 	 * Create the frame.
@@ -35,7 +38,7 @@ public class ajouterClasse extends JFrame {
 	@SuppressWarnings("static-access")
 	public ajouterClasse() {
 		setTitle("Ajout Classe");
-		setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		setBounds(100, 100, 377, 223);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -48,8 +51,8 @@ public class ajouterClasse extends JFrame {
 		nomClassText = new JTextField();
 		nomClassText.setColumns(10);
 		
-		nbrEleveText = new JTextField();
-		nbrEleveText.setColumns(10);
+		nbrElevesText = new JTextField();
+		nbrElevesText.setColumns(10);
 		
 		JLabel lblNomClasse = new JLabel("Nom de la classe :");
 		
@@ -59,23 +62,45 @@ public class ajouterClasse extends JFrame {
 		btnAjouter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Si les champs du formulaire ne sont pas vides, on insert la nouvelle classe en base
-				if (!nomClassText.getText().isEmpty() && !nbrEleveText.getText().isEmpty() && hibernate.fonctions.isInt(nbrEleveText.getText())){
+				if (!nomClassText.getText().isEmpty() && !nbrElevesText.getText().isEmpty() && hibernate.fonctions.isInt(nbrElevesText.getText())){
 					// Création de la classe à partir du formulaire
-					classe newClasse = new classe(nomClassText.getText(), Integer.parseInt(nbrEleveText.getText()));
+					classe newClasse = new classe(nomClassText.getText(), Integer.parseInt(nbrElevesText.getText()));
 					
 					// On essaie de sauvegarder la classe
 					try {
 						Boolean realiser = classeBLL.saveClasse(newClasse);
-						System.out.println(realiser);
+						
+						if (realiser == false){
+							// Boîte du message préventif
+							JOptionPane.showMessageDialog(null, "La classe a bien été enregistrée.", "Valider", JOptionPane.INFORMATION_MESSAGE);
+							
+							menu eMenu = new menu();
+							eMenu.setVisible(true);
+							dispose();
+							
+							/*
+							 *	nomClassText.setText("");
+							 *	nbrElevesText.setText("");
+							 */
+						}
+						else{
+							// Boîte du message préventif
+							avertissement = new JOptionPane();
+							avertissement.showMessageDialog(null, "Une erreur s'est produite.", "Valider", JOptionPane.WARNING_MESSAGE);
+						}
 					}
 					// Et si on n'y arrive pas on gère l'erreur
 					catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+
+						menu eMenu = new menu();
+						eMenu.setVisible(true);
+						dispose();
 					}
 				}
 				// On avertit l'utilisateur si le nombre d'élèves n'est pas numérique
-				else if (!hibernate.fonctions.isInt(nbrEleveText.getText())){
+				else if (!hibernate.fonctions.isInt(nbrElevesText.getText())){
 					// Boîte du message préventif
 					avertissement = new JOptionPane();
 					avertissement.showMessageDialog(null, "Le nombre d'élève n'est pas un nombre !", "Attention", JOptionPane.WARNING_MESSAGE);
@@ -93,6 +118,8 @@ public class ajouterClasse extends JFrame {
 		JButton btnAnnuler = new JButton("Annuler");
 		btnAnnuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				menu eMenu = new menu();
+				eMenu.setVisible(true);
 				dispose();
 			}
 		});
@@ -104,19 +131,21 @@ public class ajouterClasse extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNomClasse)
-								.addComponent(lblNombreEleves))
+								.addComponent(lblNomClasse, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+								.addComponent(lblNombreEleves, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(nbrEleveText, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
-								.addComponent(nomClassText, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(lblAjoutClasse, GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+								.addComponent(nomClassText)
+								.addComponent(nbrElevesText, GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
+							.addGap(35))
+						.addComponent(lblAjoutClasse, GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(90)
-							.addComponent(btnAjouter)
+							.addComponent(btnAjouter, GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
 							.addGap(18)
-							.addComponent(btnAnnuler)))
-					.addContainerGap())
+							.addComponent(btnAnnuler, GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+							.addGap(95)))
+					.addGap(0))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -129,7 +158,7 @@ public class ajouterClasse extends JFrame {
 							.addComponent(nomClassText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(nbrEleveText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(nbrElevesText, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblNombreEleves))))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)

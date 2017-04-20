@@ -7,16 +7,18 @@ public class planning {
 	// Attributs privés de la classe
 	private int idPlanning;
 	private Date jour;
-	private Time heure;
+	private Time heureDebut;
+	private Time heureFin;
 	private int idSalle;
 	private int idProf;
 	private int idMatiere;
 	
 	// Constructeur
-	public planning(int idPlanning, Date jour, Time heure, int idSalle, int idProf, int idMatiere){
+	public planning(int idPlanning, Date jour, Time heureDebut, Time heureFin, int idSalle, int idProf, int idMatiere){
 		this.idPlanning = idPlanning;
 		this.jour = jour;
-		this.heure = heure;
+		this.heureDebut = heureDebut;
+		this.heureFin = heureFin;
 		this.idSalle = idSalle;
 		this.idProf = idProf;
 		this.idMatiere = idMatiere;
@@ -29,8 +31,11 @@ public class planning {
 	public Date getJour() {
 		return jour;
 	}
-	public Time getHeure() {
-		return heure;
+	public Time getHeureDebut() {
+		return heureDebut;
+	}
+	public Time getHeureFin() {
+		return heureFin;
 	}
 	public int getIdSalle() {
 		return idSalle;
@@ -49,8 +54,11 @@ public class planning {
 	public void setJour(Date jour) {
 		this.jour = jour;
 	}
-	public void setHeure(Time heure) {
-		this.heure = heure;
+	public void setHeureDebut(Time heureDebut) {
+		this.heureDebut = heureDebut;
+	}
+	public void setHeureFin(Time heureFin) {
+		this.heureFin = heureFin;
 	}
 	public void setIdSalle(int idSalle) {
 		this.idSalle = idSalle;

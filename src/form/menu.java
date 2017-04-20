@@ -1,37 +1,66 @@
 package form;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.List;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
-import BLL.*;
+import BLL.classeBLL;
+import BLL.matiereBLL;
+import BLL.personneBLL;
 import entite.*;
 import form.classes.*;
 import form.matieres.*;
-import form.professeurs.*;
-import form.salles.*;
 
-@SuppressWarnings({ "unused", "serial" })
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JTabbedPane;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Color;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
+
+@SuppressWarnings("serial")
 public class menu extends JFrame {
-
-	private JPanel contentPane;
-	
 	/**
-	 * Launch the application.
+	 * Attributs de l'application.
+	 */
+	private JPanel contentPane;
+	private JTabbedPane modules;
+	
+	private JButton btnAjouterClasse;
+	private JButton btnModifierClasse;
+	private JButton btnSupprimerClasse;
+	
+	private ArrayList<String> lesColonnes;
+	private List<classe> listeClasses;
+	private JTable tableauClasses;
+	private List<matiere> listeMatieres;
+	private JTable tableauMatieres;
+	private List<personne> listePersonnes;
+	private JTable tableauPersonnes;
+
+	// private JButton btnActualiserClasses;
+	private DefaultTableModel model;
+
+	/**
+	 * Création de la fenêtre.
+	 * @throws Exception
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -45,278 +74,373 @@ public class menu extends JFrame {
 			}
 		});
 	}
-	
+
 	/**
 	 * Create the frame.
 	 */
 	public menu() {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 600, 350);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 890, 553);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
-		JSeparator separator = new JSeparator();
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(102, 0, 0));
+		panel.setBounds(0, 0, 884, 60);
+		contentPane.add(panel);
 		
-		JLabel lblClasses = new JLabel("Classes");
-		lblClasses.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClasses.setFont(new Font("Tahoma", Font.BOLD, 20));
+		JLabel lblPlanning = new JLabel("Planning");
+		lblPlanning.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPlanning.setFont(new Font("Tempus Sans ITC", Font.ITALIC, 29));
+		lblPlanning.setForeground(new Color(255, 255, 255));
 		
-		/* Module classe */
-		JButton btnAjouterClasses = new JButton("Ajouter");
-		btnAjouterClasses.addActionListener(new ActionListener() {
+		JLabel lblNewLabel = new JLabel("New label");
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblPlanning, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 498, Short.MAX_VALUE)
+					.addComponent(lblNewLabel)
+					.addGap(181))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(lblPlanning, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		panel.setLayout(gl_panel);
+		
+		modules = new JTabbedPane(JTabbedPane.TOP);
+		modules.setBounds(0, 70, 884, 454);
+		contentPane.add(modules);
+		
+		/********************************************************* Classes ********************************************************/
+		// Tuto : http://stackoverflow.com/questions/3549206/how-to-add-row-in-jtable
+		// Création du modèle de la table (colonnes)...
+		model = new DefaultTableModel();
+		
+		btnAjouterClasse = new JButton("Ajouter");
+		btnAjouterClasse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ajouterClasse ajoutClasse = new ajouterClasse();
 				ajoutClasse.setVisible(true);
+				dispose();
 			}
 		});
+		btnAjouterClasse.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
-		JButton btnModifierClasses = new JButton("Modifier");
-		btnModifierClasses.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				modifierClasse modifClasse;
+		btnModifierClasse = new JButton("Modifier");
+		btnModifierClasse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				try {
-					modifClasse = new modifierClasse();
+					modifierClasse modifClasse = new modifierClasse();
 					modifClasse.setVisible(true);
-				} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+				}
+				catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} finally {
-					
+					e1.printStackTrace();
+				}
+				catch (InstantiationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				catch (IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
+		btnModifierClasse.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
-		JButton btnSupprimerClasses = new JButton("Supprimer");
-		btnSupprimerClasses.addActionListener(new ActionListener() {
+		btnSupprimerClasse = new JButton("Supprimer");
+		btnSupprimerClasse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				suprimerClasse suprClasse = new suprimerClasse();
+				supprimerClasse suprClasse = new supprimerClasse();
 				suprClasse.setVisible(true);
 			}
 		});
+		btnSupprimerClasse.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
-		JButton btnListeClasses = new JButton("Liste");
-		btnListeClasses.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listeClasses lesClasses = new listeClasses();
-				lesClasses.setVisible(true);
+		/*
+		 *	btnActualiserClasses = new JButton("Actualiser");
+		 *	btnActualiserClasses.addActionListener(new ActionListener() {
+		 *		public void actionPerformed(ActionEvent arg0) {
+		 *			
+		 *		}
+		 *	});
+		 *	btnActualiserClasses.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		 */
+		
+		tableauClasses = getTableauClasse(model, btnAjouterClasse, btnModifierClasse, btnSupprimerClasse/*, btnActualiserClasses*/);
+		/**************************************************************************************************************************/
+		
+		/******************************************************** Matières ********************************************************/
+		model = new DefaultTableModel();
+		JPanel panelMatieres = new JPanel();
+		panelMatieres.setBackground(new Color(255, 255, 255));
+		modules.addTab("Mati\u00E8res", null, panelMatieres, null);
+		
+		tableauMatieres= new JTable(model);
+		JScrollPane scrollPaneMatieres = new JScrollPane(tableauMatieres);
+		
+		try {
+			lesColonnes = classeBLL.nomColonnes("matiere");
+			listeMatieres = matiereBLL.listeMatieres();
+			
+			for (String uneColonne:lesColonnes){
+				model.addColumn(uneColonne);
 			}
-		});
-		/**/
+			for (matiere uneMatiere:listeMatieres)
+			{
+				model.addRow(new Object[]{uneMatiere.getIdMatiere(), uneMatiere.getNomMatiere(), uneMatiere.getNbrHeures()});
+			}
+		}
+		catch (Exception e){
+			// Boîte du message préventif
+			JOptionPane.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+		}
 		
-		/* Module matière */
-		JLabel lblmatieres = new JLabel("Mati\u00E8res");
-		lblmatieres.setHorizontalAlignment(SwingConstants.CENTER);
-		lblmatieres.setFont(new Font("Tahoma", Font.BOLD, 20));
-		
-		JButton btnAjouterMatieres = new JButton("Ajouter");
-		btnAjouterMatieres.addActionListener(new ActionListener() {
+		JButton btnAjouterMatiere = new JButton("Ajouter");
+		btnAjouterMatiere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ajouterMatiere ajoutMatiere = new ajouterMatiere();
 				ajoutMatiere.setVisible(true);
+				dispose();
 			}
 		});
+		btnAjouterMatiere.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
-		JButton btnModifierMatieres = new JButton("Modifier");
-		btnModifierMatieres.addActionListener(new ActionListener() {
+		JButton btnModifierMatiere = new JButton("Modifier");
+		btnModifierMatiere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				modifierMatiere modifMatiere = new modifierMatiere();
 				modifMatiere.setVisible(true);
+				dispose();
 			}
 		});
+		btnModifierMatiere.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
-		JButton btnSupprimerMatieres = new JButton("Supprimer");
-		btnSupprimerMatieres.addActionListener(new ActionListener() {
+		JButton btnSupprimerMatiere = new JButton("Supprimer");
+		btnSupprimerMatiere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				suprimerMatiere suprMatiere = new suprimerMatiere();
+				supprimerMatiere suprMatiere = new supprimerMatiere();
 				suprMatiere.setVisible(true);
+				dispose();
 			}
 		});
-		
-		JButton btnListeMatieres = new JButton("Liste");
-		btnListeMatieres.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listeMatieres listeMatier = new listeMatieres();
-				listeMatier.setVisible(true);
-			}
-		});
-		/**/
-		
-		/* Module Professeur*/
-		JLabel lblProfesseurs = new JLabel("Professeurs");
-		lblProfesseurs.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProfesseurs.setFont(new Font("Tahoma", Font.BOLD, 20));
-		
-		JButton btnAjouterProfesseurs = new JButton("Ajouter");
-		btnAjouterProfesseurs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ajouterProfesseur ajoutProf = new ajouterProfesseur();
-				ajoutProf.setVisible(true);
-			}
-		});
-
-		JButton btnModifierProfesseurs = new JButton("Modifier");
-		btnModifierProfesseurs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				modifierProfesseur modifProf = new modifierProfesseur();
-				modifProf.setVisible(true);
-			}
-		});
-		
-		JButton btnSupprimerProfesseurs = new JButton("Supprimer");
-		btnSupprimerProfesseurs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				suprimerProfesseur suprProf = new suprimerProfesseur();
-				suprProf.setVisible(true);
-			}
-		});
-		
-		JButton btnListeProfesseurs = new JButton("Liste");
-		btnListeProfesseurs.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listeProfesseurs listeProf = new listeProfesseurs();
-				listeProf.setVisible(true);
-			}
-		});
-		/**/
-		
-		/* Module Salle */
-		JLabel lblSalles = new JLabel("Salles");
-		lblSalles.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSalles.setFont(new Font("Tahoma", Font.BOLD, 20));
-		
-		JButton btnAjouterSalles = new JButton("Ajouter");
-		btnAjouterSalles.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ajouterSalle ajoutSalle = new ajouterSalle();
-				ajoutSalle.setVisible(true);
-			}
-		});
-		
-		JButton btnModifierSalles = new JButton("Modifier");
-		btnModifierSalles.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				modifierSalle modifSalle = new modifierSalle();
-				modifSalle.setVisible(true);
-			}
-		});
-		
-		JButton btnSuprimerSalles = new JButton("Supprimer");
-		btnSuprimerSalles.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				suprimerSalle suprSalle = new suprimerSalle();
-				suprSalle.setVisible(true);
-			}
-		});
-		
-		JButton btnListeSalles = new JButton("Liste");
-		btnListeSalles.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listeSalles listSalles = new listeSalles();
-				listSalles.setVisible(true);
-			}
-		});
-		
-		JButton btnPlanning = new JButton("Planning");
-		btnPlanning.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
+		btnSupprimerMatiere.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		GroupLayout gl_panelMatieres = new GroupLayout(panelMatieres);
+		gl_panelMatieres.setHorizontalGroup(
+			gl_panelMatieres.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelMatieres.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(btnAjouterClasses, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnModifierClasses, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnSupprimerClasses, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblClasses, GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
-								.addComponent(btnListeClasses, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addGap(50)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(btnListeMatieres, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnSupprimerMatieres, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnModifierMatieres, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnAjouterMatieres, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(lblmatieres))
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(54)
-									.addComponent(lblProfesseurs, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
-									.addGap(59)
-									.addComponent(lblSalles, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(72)
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_contentPane.createSequentialGroup()
-											.addComponent(btnModifierProfesseurs, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-											.addComponent(btnModifierSalles, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
-										.addGroup(gl_contentPane.createSequentialGroup()
-											.addComponent(btnAjouterProfesseurs, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-											.addComponent(btnAjouterSalles, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
-										.addGroup(gl_contentPane.createSequentialGroup()
-											.addComponent(btnSupprimerProfesseurs, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-											.addComponent(btnSuprimerSalles, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
-										.addGroup(gl_contentPane.createSequentialGroup()
-											.addComponent(btnListeProfesseurs, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-											.addComponent(btnListeSalles, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))))))
-						.addComponent(btnPlanning, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
+					.addGroup(gl_panelMatieres.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPaneMatieres, GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE)
+						.addGroup(gl_panelMatieres.createSequentialGroup()
+							.addComponent(btnAjouterMatiere, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnModifierMatiere, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnSupprimerMatiere, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
+		gl_panelMatieres.setVerticalGroup(
+			gl_panelMatieres.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelMatieres.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblmatieres, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblProfesseurs, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblSalles, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblClasses))
+					.addComponent(scrollPaneMatieres, GroupLayout.PREFERRED_SIZE, 363, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(btnAjouterMatieres)
-							.addComponent(btnAjouterSalles)
-							.addComponent(btnAjouterProfesseurs))
-						.addComponent(btnAjouterClasses))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnModifierClasses)
-							.addGap(18)
-							.addComponent(btnSupprimerClasses))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnModifierMatieres)
-							.addGap(18)
-							.addComponent(btnSupprimerMatieres))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnModifierProfesseurs)
-							.addGap(18)
-							.addComponent(btnSupprimerProfesseurs))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnModifierSalles)
-							.addGap(18)
-							.addComponent(btnSuprimerSalles)))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnListeMatieres)
-						.addComponent(btnListeProfesseurs)
-						.addComponent(btnListeSalles)
-						.addComponent(btnListeClasses))
-					.addPreferredGap(ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-					.addComponent(btnPlanning, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-					.addGap(35))
+					.addGroup(gl_panelMatieres.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnAjouterMatiere, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnModifierMatiere, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnSupprimerMatiere, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
-		contentPane.setLayout(gl_contentPane);
+		panelMatieres.setLayout(gl_panelMatieres);
+		/**************************************************************************************************************************/
+		
+		/****************************************************** Professeurs *******************************************************/
+		model = new DefaultTableModel();
+		JPanel panelProf = new JPanel();
+		panelProf.setBackground(new Color(255, 255, 255));
+		modules.addTab("Professeurs", null, panelProf, null);
+		
+		tableauPersonnes= new JTable(model);
+		JScrollPane scrollPaneProfs = new JScrollPane(tableauPersonnes);
+		
+		try {
+			lesColonnes = classeBLL.nomColonnes("personne");
+			listePersonnes = personneBLL.listePersonnes();
+			
+			for (String uneColonne:lesColonnes){
+				model.addColumn(uneColonne);
+			}
+			for (personne unePersonne:listePersonnes)
+			{
+				model.addRow(new Object[]{unePersonne.getIdPersonne(), unePersonne.getNom(), unePersonne.getPrenom(), unePersonne.getEmail(), unePersonne.getStatut(), unePersonne.getIdentifiant()});
+			}
+		}
+		catch (Exception e){
+			// Boîte du message préventif
+			JOptionPane.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+		}
+		
+		JButton btnModifierProf = new JButton("Modifier");
+		btnModifierProf.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		JButton btnSupprimerProf = new JButton("Supprimer");
+		btnSupprimerProf.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		JButton btnAjouterProf = new JButton("Ajouter");
+		btnAjouterProf.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		GroupLayout gl_panelProf = new GroupLayout(panelProf);
+		gl_panelProf.setHorizontalGroup(
+			gl_panelProf.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelProf.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panelProf.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPaneProfs, GroupLayout.PREFERRED_SIZE, 859, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panelProf.createSequentialGroup()
+							.addComponent(btnAjouterProf, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+							.addGap(6)
+							.addComponent(btnModifierProf, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+							.addGap(6)
+							.addComponent(btnSupprimerProf, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_panelProf.setVerticalGroup(
+			gl_panelProf.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelProf.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPaneProfs, GroupLayout.PREFERRED_SIZE, 363, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addGroup(gl_panelProf.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnAjouterProf, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnModifierProf, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnSupprimerProf, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		panelProf.setLayout(gl_panelProf);
+		/**************************************************************************************************************************/
+		
+		JPanel panelSalles = new JPanel();
+		panelSalles.setBackground(new Color(255, 255, 255));
+		modules.addTab("Salles", null, panelSalles, null);
+		
+		JButton btnModifierSalle = new JButton("Modifier");
+		btnModifierSalle.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		JButton btnSupprimerSalle = new JButton("Supprimer");
+		btnSupprimerSalle.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		JButton btnAjouterSalle = new JButton("Ajouter");
+		btnAjouterSalle.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		JScrollPane scrollPaneSalles = new JScrollPane();
+		GroupLayout gl_panelSalles = new GroupLayout(panelSalles);
+		gl_panelSalles.setHorizontalGroup(
+			gl_panelSalles.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelSalles.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panelSalles.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPaneSalles, GroupLayout.PREFERRED_SIZE, 859, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panelSalles.createSequentialGroup()
+							.addComponent(btnAjouterSalle, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+							.addGap(6)
+							.addComponent(btnModifierSalle, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+							.addGap(6)
+							.addComponent(btnSupprimerSalle, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_panelSalles.setVerticalGroup(
+			gl_panelSalles.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panelSalles.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(scrollPaneSalles, GroupLayout.PREFERRED_SIZE, 363, GroupLayout.PREFERRED_SIZE)
+					.addGap(6)
+					.addGroup(gl_panelSalles.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnAjouterSalle, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnModifierSalle, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnSupprimerSalle, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		panelSalles.setLayout(gl_panelSalles);
+	}
+	
+	public JTable getTableauClasse(DefaultTableModel model, JButton btnAjouterClasses, JButton btnModifierClasses, JButton btnSupprimerClasses/*, JButton btnActualiserClasses*/){
+		tableauClasses = new JTable(model);
+		
+		JScrollPane scrollPaneClasses = new JScrollPane(tableauClasses);
+		getContentPane().add(scrollPaneClasses, BorderLayout.CENTER);
+		
+		JPanel panelClasses = new JPanel();
+		panelClasses.setBackground(new Color(255, 255, 255));
+		modules.addTab("Classe", null, panelClasses, null);
+		
+		try {
+			lesColonnes = classeBLL.nomColonnes("classe");
+			listeClasses = classeBLL.listeClasses();
+			
+			for (String uneColonne:lesColonnes){
+				model.addColumn(uneColonne);
+			}
+			for (classe uneClasse:listeClasses)
+			{
+				model.addRow(new Object[]{uneClasse.getIdClasse(), uneClasse.getNomClasse(), uneClasse.getNombreEleves()});
+			}
+		}
+		catch (Exception e){
+			// Boîte du message préventif
+			JOptionPane.showMessageDialog(null, "Erreur de connection à la base de données !" + System.getProperty("line.separator") + e, "Attention", JOptionPane.WARNING_MESSAGE);
+		}
+		
+		GroupLayout gl_panelClasses = new GroupLayout(panelClasses);
+		gl_panelClasses.setHorizontalGroup(
+			gl_panelClasses.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelClasses.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panelClasses.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelClasses.createSequentialGroup()
+							.addComponent(btnAjouterClasses, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnModifierClasses, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnSupprimerClasses, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+						/*	.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnActualiserClasses, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)*/)
+						.addComponent(scrollPaneClasses, GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_panelClasses.setVerticalGroup(
+			gl_panelClasses.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelClasses.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPaneClasses, GroupLayout.PREFERRED_SIZE, 363, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panelClasses.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnAjouterClasses, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+						.addComponent(btnModifierClasses, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnSupprimerClasses, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+					/*	.addComponent(btnActualiserClasses, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)*/)
+					.addContainerGap())
+		);
+		panelClasses.setLayout(gl_panelClasses);
+		
+		return tableauClasses;
 	}
 }
