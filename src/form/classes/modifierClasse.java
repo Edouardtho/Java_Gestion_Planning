@@ -11,7 +11,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import BLL.classeBLL;
 import entite.classe;
-import hibernate.fonctions;
+import form.menu;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -30,7 +30,6 @@ public class modifierClasse extends JFrame {
 	private JPanel contentPane;
 	private JTextField nomClassText;
 	private JTextField nbrElevesText;
-	private fonctions mesFonctions;
 	
 	private List<classe> listeClasse;
 	
@@ -98,7 +97,8 @@ public class modifierClasse extends JFrame {
 							// Boîte du message préventif
 							JOptionPane.showMessageDialog(null, "La classe a bien été modifiée.", "Valider", JOptionPane.INFORMATION_MESSAGE);
 							
-							mesFonctions.close();
+							menu eMenu = new menu();
+							eMenu.setVisible(true);
 							dispose();
 						}
 						else{
@@ -134,7 +134,8 @@ public class modifierClasse extends JFrame {
 		JButton btnAnnuler = new JButton("Annuler");
 		btnAnnuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mesFonctions.close();
+				menu eMenu = new menu();
+				eMenu.setVisible(true);
 				dispose();
 			}
 		});

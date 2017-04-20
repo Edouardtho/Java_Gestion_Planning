@@ -7,7 +7,6 @@ import javax.swing.border.EmptyBorder;
 import BLL.classeBLL;
 import entite.classe;
 import form.menu;
-import hibernate.fonctions;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,7 +29,6 @@ public class ajouterClasse extends JFrame {
 	private JTextField nomClassText;
 	private JTextField nbrElevesText;
 	private JOptionPane avertissement;
-	private fonctions mesFonctions;
 
 	/**
 	 * Create the frame.

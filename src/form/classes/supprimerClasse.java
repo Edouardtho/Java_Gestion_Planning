@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 
 import BLL.classeBLL;
 import entite.classe;
+import form.menu;
 import hibernate.fonctions;
 
 import javax.swing.*;
@@ -25,7 +26,6 @@ public class supprimerClasse extends JFrame {
 	private JOptionPane avertissement;
 	private List<classe> listeClasse;
 	private JTextField nbrElevesText;
-	private fonctions mesFonctions;
 
 	/**
 	 * Create the frame.
@@ -88,7 +88,8 @@ public class supprimerClasse extends JFrame {
 							// Boîte du message préventif
 							JOptionPane.showMessageDialog(null, "La classe a bien été supprimée.", "Valider", JOptionPane.INFORMATION_MESSAGE);
 							
-							mesFonctions.close();
+							menu eMenu = new menu();
+							eMenu.setVisible(true);
 							dispose();
 						}
 						else{
@@ -118,7 +119,8 @@ public class supprimerClasse extends JFrame {
 		JButton btnAnnuler = new JButton("Annuler");
 		btnAnnuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mesFonctions.close();
+				menu eMenu = new menu();
+				eMenu.setVisible(true);
 				dispose();
 			}
 		});
