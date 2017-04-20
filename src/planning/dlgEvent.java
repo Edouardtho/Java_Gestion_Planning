@@ -178,6 +178,7 @@ public class dlgEvent extends JDialog {
 	private JComboBox <String> cbRecall;
 	// Event type string
 	private String [] cbtarr = {"Evenement", "Fête", "Anniversaire"};	
+	@SuppressWarnings("unused")
 	private char [] cbtchar = {'E', 'F', 'A'};
 	private JComboBox<String> cbType;	
 	private ActionListener cbral ;
